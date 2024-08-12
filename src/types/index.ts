@@ -5,3 +5,7 @@ export type WeatherForecast = {
   uvIndex: number;
   visibility: number;
 };
+
+export type SearchState = {
+  city: string;
+};

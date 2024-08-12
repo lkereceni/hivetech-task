@@ -1,8 +1,8 @@
-export const fetchCurrentWeather = async () => {
+export const fetchCurrentWeather = async (city: string) => {
   const response = await fetch(
-    `${
-      import.meta.env.VITE_BASE_API_URL
-    }weather?q=kalinovac&units=metric&appid=${import.meta.env.VITE_API_KEY}`
+    `${import.meta.env.VITE_BASE_API_URL}weather?q=${city}&units=metric&appid=${
+      import.meta.env.VITE_API_KEY
+    }`
   );
 
   return response.json();

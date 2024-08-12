@@ -1,20 +1,26 @@
 import { useQueries } from "@tanstack/react-query";
 import { fetchCurrentWeather, fetchUVIndex } from "../api";
 import { WeatherForecast } from "../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 export const useWeatherForecastData = (): {
   weatherForecast: WeatherForecast | null;
   isLoading: boolean;
 } => {
+  const city = useSelector((state: RootState) => state.search.city);
   const [currentWeatherData, uvIndexData] = useQueries({
     queries: [
-      { queryKey: ["currentWeather"], queryFn: fetchCurrentWeather },
+      {
+        queryKey: ["currentWeather", city],
+        queryFn: () => fetchCurrentWeather(city),
+      },
       { queryKey: ["UVIndex"], queryFn: fetchUVIndex },
     ],
   });
 
   const isLoading = currentWeatherData.isLoading || uvIndexData.isLoading;
-  const isSuccess = currentWeatherData.isSuccess || uvIndexData.isSuccess;
+  const isSuccess = currentWeatherData.isSuccess && uvIndexData.isSuccess; // ! Refactor this
 
   let weatherForecast: WeatherForecast | null = null;
 
