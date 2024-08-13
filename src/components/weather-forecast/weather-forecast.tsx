@@ -1,10 +1,14 @@
-import { useWeatherForecastData } from "../../hooks/use-weather-data";
+import { useWeatherForecastData } from "../../hooks/use-weather-forecast-data";
 
 export const WeatherForecast = () => {
-  const { weatherForecast, isLoading } = useWeatherForecastData();
+  const { weatherForecast, loading, error } = useWeatherForecastData();
 
-  if (isLoading) {
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
   }
 
   if (!weatherForecast) {

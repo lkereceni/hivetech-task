@@ -1,19 +1,55 @@
-export const fetchCurrentWeather = async (city: string) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_API_URL}weather?q=${city}&units=metric&appid=${
-      import.meta.env.VITE_API_KEY
-    }`
-  );
+import axios, { AxiosError } from "axios";
 
-  return response.json();
+interface CurrentWeatherInterface {
+  name: string;
+  coord: {
+    lon: number;
+    lat: number;
+  };
+  main: {
+    temp: number;
+  };
+  weather: [
+    {
+      description: string;
+    }
+  ];
+  visibility: number;
+}
+
+interface UVIndexInterface {
+  value: number;
+}
+
+export const fetchCurrentWeather = async (
+  city: string
+): Promise<CurrentWeatherInterface> => {
+  return await axios
+    .get(
+      `${
+        import.meta.env.VITE_BASE_API_URL
+      }weather?q=${city}&units=metric&appid=${import.meta.env.VITE_API_KEY}`
+    )
+    .then((response) => response.data)
+    .catch((error: AxiosError) => {
+      throw error.message;
+    });
 };
 
-export const fetchUVIndex = async () => {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_API_URL}uvi?lat=46.0294&lon=17.1156&appid=${
-      import.meta.env.VITE_API_KEY
-    }`
-  );
-
-  return response.json();
+export const fetchUVIndex = async (
+  lat: number,
+  lon: number
+): Promise<UVIndexInterface> => {
+  return await axios
+    .get(
+      `${import.meta.env.VITE_BASE_API_URL}uvi?lat=${lat}&lon=${lon}&appid=${
+        import.meta.env.VITE_API_KEY
+      }`
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error: AxiosError) => {
+      throw error.message;
+    });
 };
