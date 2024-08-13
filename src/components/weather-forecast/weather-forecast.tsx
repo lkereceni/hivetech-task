@@ -43,11 +43,26 @@ export const WeatherForecast = () => {
       <Typography variant="body1" sx={weatherForecastTemperatureStyles}>
         {weatherForecast.temperature}°C
       </Typography>
+      <Typography variant="body1">
+        {`Feels like ${weatherForecast.feelsLikeTemperature}°C`}
+      </Typography>
       <Box sx={weatherForecastInfoBoxStyles}>
         <WeatherInfoCard label="UV INDEX" value={weatherForecast.uvIndex} />
         <WeatherInfoCard
           label="VISIBILITY"
           value={`${weatherForecast.visibility}m`}
+        />
+        <WeatherInfoCard
+          label="WIND"
+          value={`${weatherForecast.windSpeed.toFixed(2)}km/h`}
+        />
+        <WeatherInfoCard
+          label="HUMIDITY"
+          value={`${weatherForecast.humidity}%`}
+        />
+        <WeatherInfoCard
+          label="PRESSURE"
+          value={`${weatherForecast.pressure}hPa`}
         />
       </Box>
     </>

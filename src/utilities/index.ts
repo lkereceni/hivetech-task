@@ -7,3 +7,5 @@ export const getErrorMessage = (error: unknown): string => {
     return "Failed to fetch weather data";
   }
 };
+
+export const convertMphToKph = (mphSpeed: number): number => mphSpeed * 3.6;

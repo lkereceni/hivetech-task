@@ -8,6 +8,9 @@ interface CurrentWeatherInterface {
   };
   main: {
     temp: number;
+    feels_like: number;
+    pressure: number;
+    humidity: number;
   };
   weather: [
     {
@@ -15,6 +18,9 @@ interface CurrentWeatherInterface {
     }
   ];
   visibility: number;
+  wind: {
+    speed: number;
+  };
 }
 
 interface UVIndexInterface {

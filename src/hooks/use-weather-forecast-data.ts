@@ -3,7 +3,7 @@ import { CityCoord, WeatherForecast } from "../types";
 import { fetchCurrentWeather, fetchUVIndex } from "../api";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { getErrorMessage } from "../utilities";
+import { convertMphToKph, getErrorMessage } from "../utilities";
 
 export const useWeatherForecastData = () => {
   const city = useSelector((state: RootState) => state.search.city);
@@ -36,6 +36,10 @@ export const useWeatherForecastData = () => {
           description: data.weather[0].description,
           uvIndex: Math.round(uvData.value),
           visibility: data.visibility,
+          humidity: data.main.humidity,
+          windSpeed: convertMphToKph(data.wind.speed),
+          feelsLikeTemperature: Math.round(data.main.feels_like),
+          pressure: data.main.pressure,
         });
       } catch (error) {
         setError(getErrorMessage(error));

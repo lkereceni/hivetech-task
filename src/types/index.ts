@@ -4,6 +4,10 @@ export type WeatherForecast = {
   description: string;
   uvIndex: number;
   visibility: number;
+  humidity: number;
+  windSpeed: number;
+  feelsLikeTemperature: number;
+  pressure: number;
 };
 
 export type CityCoord = {

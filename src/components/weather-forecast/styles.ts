@@ -35,5 +35,6 @@ export const weatherForecastInfoBoxStyles: SxProps = {
   flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
-  gap: 6,
+  flexWrap: "wrap",
+  gap: 4,
 };
