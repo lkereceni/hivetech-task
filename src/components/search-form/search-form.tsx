@@ -3,6 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setSearch } from "../../store/city-search-slice";
 
+import styled from "@emotion/styled";
+import { Box, Button, TextField } from "@mui/material";
+import {
+  searchBoxStyles,
+  searchButtonStyles,
+  searchTextFieldStyles,
+} from "./styles";
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+`;
+
 export const SearchForm = () => {
   const initialCity = useSelector((state: RootState) => state.search.city);
   const [city, setCity] = useState(initialCity);
@@ -19,14 +33,21 @@ export const SearchForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={city}
-        onChange={handleInputChange}
-        placeholder="Search"
-      />
-      <button type="submit">Search</button>
-    </form>
+    <Box sx={searchBoxStyles}>
+      <Form onSubmit={handleSubmit}>
+        <TextField
+          type="text"
+          value={city}
+          onChange={handleInputChange}
+          placeholder="Search"
+          variant="outlined"
+          size="small"
+          sx={searchTextFieldStyles}
+        />
+        <Button variant="text" type="submit" sx={searchButtonStyles}>
+          Search
+        </Button>
+      </Form>
+    </Box>
   );
 };
