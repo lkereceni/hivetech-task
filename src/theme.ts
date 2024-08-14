@@ -19,5 +19,22 @@ export const theme = createTheme({
         color: "secondary",
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          color: "#B0BEC5",
+          "&.Mui-selected": {
+            color: "#82B1FF",
+          },
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: "#82B1FF",
+        },
+      },
+    },
   },
 });

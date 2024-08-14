@@ -27,6 +27,18 @@ interface UVIndexInterface {
   value: number;
 }
 
+interface HourlyForecastInterface {
+  data: [
+    {
+      app_temp: number;
+      timestamp_local: string;
+      weather: {
+        icon: string;
+      };
+    }
+  ];
+}
+
 export const fetchCurrentWeather = async (
   city: string
 ): Promise<CurrentWeatherInterface> => {
@@ -46,6 +58,20 @@ export const fetchUVIndex = async (
   const { data } = await axios.get(
     `${import.meta.env.VITE_BASE_API_URL}uvi?lat=${lat}&lon=${lon}&appid=${
       import.meta.env.VITE_API_KEY
+    }`
+  );
+
+  return data;
+};
+
+export const fetchHourlyForecast = async (
+  city: string
+): Promise<HourlyForecastInterface> => {
+  const { data } = await axios.get(
+    `${
+      import.meta.env.VITE_WEATHERBIT_BASE_API_URL
+    }forecast/hourly?city=${city}&units=M&key=${
+      import.meta.env.VITE_WEATHERBIT_API_KEY
     }`
   );
 

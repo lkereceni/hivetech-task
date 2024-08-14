@@ -18,3 +18,9 @@ export type CityCoord = {
 export type SearchState = {
   city: string;
 };
+
+export type HourlyForecast = {
+  temperature: number;
+  icon: string;
+  time: string;
+};

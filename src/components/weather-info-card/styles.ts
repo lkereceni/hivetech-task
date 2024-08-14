@@ -2,8 +2,8 @@ import { SxProps } from "@mui/material";
 import { theme } from "../../theme";
 
 export const weatherInfoCardStyles: SxProps = {
-  height: 100,
-  width: 150,
+  minHeight: 100,
+  minWidth: 150,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
