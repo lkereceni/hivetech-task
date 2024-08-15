@@ -2,7 +2,7 @@ import { DailyForecast } from "../../../types";
 import { Box, Card, Typography } from "@mui/material";
 import { dailyForecastTemperatureBoxStyles } from "./styles";
 import { theme } from "../../../theme";
-import { periodicalForecastCardStyles } from "../../../styles/components/card";
+import { periodicForecastCardStyles } from "../../../styles/components/card";
 
 type DailyForecastCardProps = {
   data: DailyForecast;
@@ -10,7 +10,7 @@ type DailyForecastCardProps = {
 
 export const DailyForecastCard = ({ data }: DailyForecastCardProps) => {
   return (
-    <Card sx={periodicalForecastCardStyles}>
+    <Card sx={periodicForecastCardStyles}>
       <Typography variant="body1">{data.day}</Typography>
       <img
         width={42}

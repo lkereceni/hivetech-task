@@ -1,16 +1,14 @@
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "./styles";
 import { useHourlyForecastData } from "../../hooks/use-hourly-forecast-data";
-import { theme } from "../../theme";
 import { HourlyForecastCard } from "./hourly-forecast-card/hourly-forecast-card";
+import { PeriodicForecastLoading } from "../loading/period-forecast-loading/periodic-forecast-loading";
 
 export const HourlyForecast = () => {
   const { hourlyForecast, loading, error } = useHourlyForecastData();
 
   if (loading) {
-    return (
-      <CircularProgress sx={{ color: theme.palette.primary.main }} size={56} />
-    );
+    return <PeriodicForecastLoading />;
   }
 
   if (error) null;

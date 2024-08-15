@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { theme } from "../../theme";
 
-export const periodicalForecastCardStyles: SxProps = {
+export const periodicForecastCardStyles: SxProps = {
   width: 120,
   display: "flex",
   flexDirection: "column",

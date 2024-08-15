@@ -1,16 +1,14 @@
 import { useDailyForecastData } from "../../hooks/use-daily-forecast-data";
-import { CircularProgress, Grid } from "@mui/material";
-import { theme } from "../../theme";
+import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
 import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
+import { PeriodicForecastLoading } from "../loading/period-forecast-loading/periodic-forecast-loading";
 
 export const DailyForecast = () => {
   const { dailyForecast, loading, error } = useDailyForecastData();
 
   if (loading) {
-    return (
-      <CircularProgress sx={{ color: theme.palette.primary.main }} size={56} />
-    );
+    return <PeriodicForecastLoading />;
   }
 
   if (error) null;

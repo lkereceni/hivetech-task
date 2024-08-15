@@ -1,6 +1,6 @@
 import { Card, Typography } from "@mui/material";
 import { HourlyForecast } from "../../../types";
-import { periodicalForecastCardStyles } from "../../../styles/components/card";
+import { periodicForecastCardStyles } from "../../../styles/components/card";
 
 type HourlyForecastCardProps = {
   data: HourlyForecast;
@@ -8,7 +8,7 @@ type HourlyForecastCardProps = {
 
 export const HourlyForecastCard = ({ data }: HourlyForecastCardProps) => {
   return (
-    <Card sx={periodicalForecastCardStyles}>
+    <Card sx={periodicForecastCardStyles}>
       <Typography variant="body1">{data.time}</Typography>
       <img
         width={42}
