@@ -1,23 +1,21 @@
 import { Card, Typography } from "@mui/material";
 import { HourlyForecast } from "../../../types";
-import { hourlyForecastCardStyles } from "./styles";
+import { periodicalForecastCardStyles } from "../../../styles/components/card";
 
 type HourlyForecastCardProps = {
-  hourlyForecast: HourlyForecast;
+  data: HourlyForecast;
 };
 
-export const HourlyForecastCard = ({
-  hourlyForecast,
-}: HourlyForecastCardProps) => {
+export const HourlyForecastCard = ({ data }: HourlyForecastCardProps) => {
   return (
-    <Card sx={hourlyForecastCardStyles}>
-      <Typography variant="body1">{hourlyForecast.time}</Typography>
+    <Card sx={periodicalForecastCardStyles}>
+      <Typography variant="body1">{data.time}</Typography>
       <img
         width={42}
         height={42}
-        src={`https://www.weatherbit.io/static/img/icons/${hourlyForecast.icon}.png`}
+        src={`https://www.weatherbit.io/static/img/icons/${data.icon}.png`}
       />
-      <Typography variant="body1">{hourlyForecast.temperature}°C</Typography>
+      <Typography variant="body1">{data.temperature}°C</Typography>
     </Card>
   );
 };

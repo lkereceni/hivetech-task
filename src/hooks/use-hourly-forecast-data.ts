@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { HourlyForecast } from "../types";
 import { fetchHourlyForecast } from "../api";
-import { getErrorMessage, toHours } from "../utilities";
+import { getErrorMessage, getHours } from "../utilities";
 
 export const useHourlyForecastData = () => {
   const city = useSelector((state: RootState) => state.search.city);
@@ -28,7 +28,7 @@ export const useHourlyForecastData = () => {
         const hourlyForecast: HourlyForecast[] = hourlyForecastData.data.map(
           (entry): HourlyForecast => ({
             temperature: Math.round(entry.app_temp),
-            time: toHours(entry.timestamp_local),
+            time: getHours(entry.timestamp_local),
             icon: entry.weather.icon,
           })
         );

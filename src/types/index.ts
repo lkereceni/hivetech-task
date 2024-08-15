@@ -24,3 +24,10 @@ export type HourlyForecast = {
   icon: string;
   time: string;
 };
+
+export type DailyForecast = {
+  maxTemperature: number;
+  minTemperature: number;
+  icon: string;
+  day: string;
+};

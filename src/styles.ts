@@ -16,6 +16,6 @@ export const rightGridStyles: SxProps = {
   flexDirection: "column",
   backgroundColor: theme.palette.secondary.main,
   paddingLeft: "64px",
-  paddingTop: "64px",
+  paddingTop: "24px",
   flexGrow: 1,
 };

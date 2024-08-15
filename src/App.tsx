@@ -12,6 +12,7 @@ import { theme } from "./theme";
 import { weatherForecastBoxContainerStyles } from "./components/weather-forecast/styles";
 import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
 import { SyntheticEvent, useState } from "react";
+import { DailyForecast } from "./components/daily-forecast/daily-forecast";
 
 function App() {
   const [tabValue, setTabValue] = useState<string>("hourly");
@@ -42,10 +43,10 @@ function App() {
           <Box>
             <Tabs value={tabValue} onChange={handleTabChange}>
               <Tab value={"hourly"} label="Hourly" />
-              <Tab value={"weekly"} label="Weekly" />
+              <Tab value={"daily"} label="Daily" />
             </Tabs>
           </Box>
-          <HourlyForecast />
+          {tabValue === "hourly" ? <HourlyForecast /> : <DailyForecast />}
         </Grid>
       </Grid>
     </ThemeProvider>

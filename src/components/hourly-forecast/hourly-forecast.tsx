@@ -24,7 +24,7 @@ export const HourlyForecast = () => {
         sx={hourlyForecastGridStyles}
       >
         {hourlyForecast?.map((entry, index) => (
-          <HourlyForecastCard key={index} hourlyForecast={entry} />
+          <HourlyForecastCard key={index} data={entry} />
         ))}
       </Grid>
     </>

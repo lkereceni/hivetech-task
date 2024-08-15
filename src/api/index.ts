@@ -39,6 +39,19 @@ interface HourlyForecastInterface {
   ];
 }
 
+interface DailyForecastInterface {
+  data: [
+    {
+      app_max_temp: number;
+      app_min_temp: number;
+      datetime: string;
+      weather: {
+        icon: string;
+      };
+    }
+  ];
+}
+
 export const fetchCurrentWeather = async (
   city: string
 ): Promise<CurrentWeatherInterface> => {
@@ -70,7 +83,21 @@ export const fetchHourlyForecast = async (
   const { data } = await axios.get(
     `${
       import.meta.env.VITE_WEATHERBIT_BASE_API_URL
-    }forecast/hourly?city=${city}&units=M&key=${
+    }forecast/hourly?city=${city}&hours=24&units=M&key=${
+      import.meta.env.VITE_WEATHERBIT_API_KEY
+    }`
+  );
+
+  return data;
+};
+
+export const fetchDailyForecast = async (
+  city: string
+): Promise<DailyForecastInterface> => {
+  const { data } = await axios.get(
+    `${
+      import.meta.env.VITE_WEATHERBIT_BASE_API_URL
+    }forecast/daily?city=${city}&days=10&units=M&key=${
       import.meta.env.VITE_WEATHERBIT_API_KEY
     }`
   );
