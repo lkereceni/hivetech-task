@@ -1,5 +1,9 @@
 import { AxiosError } from "axios";
 
+export const GLOBAL_STRINGS = {
+  favorites: "favorites",
+};
+
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof AxiosError && error.response?.data) {
     return `Error ${error.response?.data.cod}: ${error.response?.data.message}`;

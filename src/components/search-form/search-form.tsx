@@ -4,12 +4,10 @@ import { RootState } from "../../store/store";
 import { setSearch } from "../../store/city-search-slice";
 
 import styled from "@emotion/styled";
-import { Box, Button, TextField } from "@mui/material";
-import {
-  searchBoxStyles,
-  searchButtonStyles,
-  searchTextFieldStyles,
-} from "./styles";
+import { Box, IconButton, TextField } from "@mui/material";
+import { searchBoxStyles, searchTextFieldStyles } from "./styles";
+import { Search } from "@mui/icons-material";
+import { theme } from "../../theme";
 
 const Form = styled.form`
   display: flex;
@@ -44,9 +42,9 @@ export const SearchForm = () => {
           size="small"
           sx={searchTextFieldStyles}
         />
-        <Button variant="text" type="submit" sx={searchButtonStyles}>
-          Search
-        </Button>
+        <IconButton type="submit" sx={{ color: theme.palette.secondary.light }}>
+          <Search />
+        </IconButton>
       </Form>
     </Box>
   );

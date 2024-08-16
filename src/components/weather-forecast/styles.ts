@@ -9,13 +9,6 @@ export const weatherForecastBoxContainerStyles: SxProps = {
   gap: 3,
 };
 
-export const weatherForecastCityTemperatureBoxStyles: SxProps = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "column",
-};
-
 export const weatherForecastCityStyles: SxProps = {
   fontSize: 48,
 };
@@ -37,4 +30,9 @@ export const weatherForecastInfoBoxStyles: SxProps = {
   alignItems: "center",
   flexWrap: "wrap",
   gap: 4,
+};
+
+export const favoriteIconStyles: SxProps = {
+  color: "error.main",
+  fontSize: 32,
 };
