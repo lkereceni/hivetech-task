@@ -31,3 +31,10 @@ export type DailyForecast = {
   icon: string;
   day: string;
 };
+
+export type CityFind = {
+  id: number;
+  name: string;
+  coord: CityCoord;
+  country: string;
+};

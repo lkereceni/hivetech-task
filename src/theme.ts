@@ -36,5 +36,17 @@ export const theme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "#313C4A",
+        },
+        option: {
+          ":hover": {
+            backgroundColor: "#0B121E",
+          },
+        },
+      },
+    },
   },
 });

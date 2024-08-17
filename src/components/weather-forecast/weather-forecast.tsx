@@ -60,22 +60,22 @@ export const WeatherForecast = () => {
 
   return (
     <>
-      <Stack direction={"row"} spacing={1} alignItems={"baseline"}>
-        <Stack direction={"column"} alignItems={"center"}>
+      <Stack direction={"column"} spacing={1} alignItems={"center"}>
+        <Stack direction={"row"} alignItems={"center"} spacing={2}>
           <Typography variant="h1" sx={weatherForecastCityStyles}>
             {weatherForecast.city}
           </Typography>
-          <Typography variant="body1" sx={weatherForecastDescriptionStyles}>
-            {weatherForecast.description}
-          </Typography>
+          <IconButton onClick={handleOnClickFavorite}>
+            {!favoriteIconState ? (
+              <FavoriteBorder sx={favoriteIconStyles} />
+            ) : (
+              <Favorite sx={favoriteIconStyles} />
+            )}
+          </IconButton>
         </Stack>
-        <IconButton onClick={handleOnClickFavorite}>
-          {!favoriteIconState ? (
-            <FavoriteBorder sx={favoriteIconStyles} />
-          ) : (
-            <Favorite sx={favoriteIconStyles} />
-          )}
-        </IconButton>
+        <Typography variant="body1" sx={weatherForecastDescriptionStyles}>
+          {weatherForecast.description}
+        </Typography>
       </Stack>
       <Typography variant="body1" sx={weatherForecastTemperatureStyles}>
         {weatherForecast.temperature}°C

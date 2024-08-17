@@ -6,13 +6,13 @@ import { fetchDailyForecast } from "../api";
 import { getErrorMessage, getShortDayName } from "../utilities";
 
 export const useDailyForecastData = () => {
-  const city = useSelector((state: RootState) => state.search.city);
+  const city = useSelector((state: RootState) => state.search.selectedCity);
 
   const [dailyForecast, setDailyForecast] = useState<DailyForecast[] | null>(
     null
   );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!city) return;

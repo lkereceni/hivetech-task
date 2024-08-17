@@ -6,7 +6,7 @@ import { RootState } from "../store/store";
 import { getKph, getErrorMessage } from "../utilities";
 
 export const useWeatherForecastData = () => {
-  const city = useSelector((state: RootState) => state.search.city);
+  const city = useSelector((state: RootState) => state.search.selectedCity);
 
   const [weatherForecast, setWeatherForecast] =
     useState<WeatherForecast | null>(null);
@@ -23,12 +23,8 @@ export const useWeatherForecastData = () => {
     const fetchWeatherData = async () => {
       try {
         const data = await fetchCurrentWeather(city);
-        const coord: CityCoord = {
-          lat: data.coord.lat,
-          lon: data.coord.lon,
-        };
 
-        const uvData = await fetchUVIndex(coord.lat, coord.lon);
+        const uvData = await fetchUVIndex(city);
 
         setWeatherForecast({
           city: data.name,

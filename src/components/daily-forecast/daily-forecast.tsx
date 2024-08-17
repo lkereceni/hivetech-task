@@ -27,6 +27,4 @@ export const DailyForecast = () => {
       </Grid>
     </>
   );
-
-  return <div>DailyForecast</div>;
 };

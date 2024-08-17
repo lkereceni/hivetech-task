@@ -6,7 +6,7 @@ import { fetchHourlyForecast } from "../api";
 import { getErrorMessage, getHours } from "../utilities";
 
 export const useHourlyForecastData = () => {
-  const city = useSelector((state: RootState) => state.search.city);
+  const city = useSelector((state: RootState) => state.search.selectedCity);
 
   const [hourlyForecast, setHourlyForecast] = useState<HourlyForecast[] | null>(
     null

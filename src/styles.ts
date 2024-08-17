@@ -5,6 +5,7 @@ export const leftGridStyles: SxProps = {
   width: "40vw",
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
   flexShrink: 0,
   gap: 10,
   padding: "64px",
