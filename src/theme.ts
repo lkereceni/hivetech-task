@@ -48,5 +48,12 @@ export const theme = createTheme({
         },
       },
     },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "#313C4A",
+        },
+      },
+    },
   },
 });

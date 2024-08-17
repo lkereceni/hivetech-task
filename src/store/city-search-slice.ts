@@ -1,14 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CityCoord } from "../types";
+import { CityFind } from "../types";
 
 interface InitialState {
   searchCity: string;
-  selectedCity: CityCoord;
+  selectedCity: CityFind;
 }
 
 const initialState: InitialState = {
   searchCity: "Kalinovac",
-  selectedCity: { lat: 46.0294, lon: 17.1156 },
+  selectedCity: {
+    id: 3198450,
+    name: "Kalinovac",
+    country: "HR",
+    coord: {
+      lat: 46.0294,
+      lon: 17.1156,
+    },
+  },
 };
 
 const citySearchSlice = createSlice({
@@ -18,7 +26,7 @@ const citySearchSlice = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.searchCity = action.payload;
     },
-    setSelectedCity: (state, action: PayloadAction<CityCoord>) => {
+    setSelectedCity: (state, action: PayloadAction<CityFind>) => {
       state.selectedCity = action.payload;
     },
   },

@@ -9,12 +9,12 @@ import {
 import { CityCoord } from "../types";
 
 export const fetchCurrentWeather = async (
-  coord: CityCoord
+  city: string
 ): Promise<CurrentWeatherInterface> => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_BASE_API_URL}weather?lat=${coord.lat}&lon=${
-      coord.lon
-    }&units=metric&appid=${import.meta.env.VITE_API_KEY}`
+    `${import.meta.env.VITE_BASE_API_URL}weather?q=${city}&units=metric&appid=${
+      import.meta.env.VITE_API_KEY
+    }`
   );
 
   return data;

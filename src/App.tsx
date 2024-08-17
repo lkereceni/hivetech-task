@@ -3,6 +3,8 @@ import {
   Box,
   CssBaseline,
   Grid,
+  IconButton,
+  Stack,
   Tab,
   Tabs,
   ThemeProvider,
@@ -13,6 +15,7 @@ import { weatherForecastBoxContainerStyles } from "./components/weather-forecast
 import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
 import { SyntheticEvent, useState } from "react";
 import { DailyForecast } from "./components/daily-forecast/daily-forecast";
+import { Favorites } from "./components/favorites/favorites";
 
 function App() {
   const [tabValue, setTabValue] = useState<string>("hourly");
@@ -40,12 +43,17 @@ function App() {
           </Box>
         </Grid>
         <Grid sx={rightGridStyles}>
-          <Box>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            paddingRight={4}
+          >
             <Tabs value={tabValue} onChange={handleTabChange}>
               <Tab value={"hourly"} label="Hourly" />
               <Tab value={"daily"} label="Daily" />
             </Tabs>
-          </Box>
+            <Favorites />
+          </Stack>
           {tabValue === "hourly" ? <HourlyForecast /> : <DailyForecast />}
         </Grid>
       </Grid>

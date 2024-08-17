@@ -23,7 +23,7 @@ export const useDailyForecastData = () => {
 
     const fetchDailyForecastData = async () => {
       try {
-        const dailyForecastData = await fetchDailyForecast(city);
+        const dailyForecastData = await fetchDailyForecast(city.coord);
 
         const dailyForecast: DailyForecast[] = dailyForecastData.data.map(
           (entry): DailyForecast => ({

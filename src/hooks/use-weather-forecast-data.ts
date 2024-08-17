@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CityCoord, WeatherForecast } from "../types";
+import { WeatherForecast } from "../types";
 import { fetchCurrentWeather, fetchUVIndex } from "../api";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -22,9 +22,9 @@ export const useWeatherForecastData = () => {
 
     const fetchWeatherData = async () => {
       try {
-        const data = await fetchCurrentWeather(city);
+        const data = await fetchCurrentWeather(city.name);
 
-        const uvData = await fetchUVIndex(city);
+        const uvData = await fetchUVIndex(city.coord);
 
         setWeatherForecast({
           city: data.name,

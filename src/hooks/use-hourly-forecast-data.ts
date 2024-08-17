@@ -23,7 +23,7 @@ export const useHourlyForecastData = () => {
 
     const fetchHourlyForecastData = async () => {
       try {
-        const hourlyForecastData = await fetchHourlyForecast(city);
+        const hourlyForecastData = await fetchHourlyForecast(city.coord);
 
         const hourlyForecast: HourlyForecast[] = hourlyForecastData.data.map(
           (entry): HourlyForecast => ({
