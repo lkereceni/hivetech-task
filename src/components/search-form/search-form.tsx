@@ -1,23 +1,34 @@
-import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEventHandler,
+  SyntheticEvent,
+  useRef,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setSearch, setSelectedCity } from "../../store/city-search-slice";
-
 import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
-import { searchBoxStyles, searchTextFieldStyles } from "./styles";
+import { searchTextFieldStyles } from "./styles";
 import { Search } from "@mui/icons-material";
 import { theme } from "../../theme";
 import { useCityFindData } from "../../hooks/use-city-find";
 import { CityCoord, CityFind } from "../../types";
+import styled from "@emotion/styled";
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+`;
 
 export const SearchForm = () => {
+  const dispatch = useDispatch();
   const selectedCity = useSelector(
     (state: RootState) => state.search.selectedCity
   );
-
-  const dispatch = useDispatch();
-
   const { cityFind, loading } = useCityFindData();
+
   const [cityCoord, setCityCoord] = useState<CityCoord>({
     lat: selectedCity.lat,
     lon: selectedCity.lon,
@@ -44,7 +55,8 @@ export const SearchForm = () => {
     }
   };
 
-  const handleSearchButtonClick = () => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
     dispatch(setSelectedCity(cityCoord));
   };
 
@@ -67,7 +79,7 @@ export const SearchForm = () => {
         </Box>
       )}
       renderInput={(params) => (
-        <Box sx={searchBoxStyles}>
+        <Form onSubmit={handleSubmit}>
           <TextField
             {...params}
             type="text"
@@ -87,12 +99,12 @@ export const SearchForm = () => {
             }}
           />
           <IconButton
-            onClick={handleSearchButtonClick}
+            type={"submit"}
             sx={{ color: theme.palette.secondary.light }}
           >
             <Search />
           </IconButton>
-        </Box>
+        </Form>
       )}
     />
   );
