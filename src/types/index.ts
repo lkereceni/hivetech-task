@@ -38,3 +38,5 @@ export type CityFind = {
   coord: CityCoord;
   country: string;
 };
+
+export type ForecastTabOptions = "hourly" | "daily";

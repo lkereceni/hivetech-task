@@ -3,7 +3,7 @@ import { WeatherForecast } from "../types";
 import { fetchCurrentWeather, fetchUVIndex } from "../api";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { getKph, getErrorMessage } from "../utilities";
+import { getKph, getErrorMessage } from "../utils";
 
 export const useWeatherForecastData = () => {
   const city = useSelector((state: RootState) => state.search.selectedCity);
@@ -39,7 +39,6 @@ export const useWeatherForecastData = () => {
         });
       } catch (error) {
         setError(getErrorMessage(error));
-        console.error("Error fetching weather data:", error);
       } finally {
         setLoading(false);
       }

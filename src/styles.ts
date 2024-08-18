@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { theme } from "./theme";
 
-export const leftGridStyles: SxProps = {
+export const primaryGridStyles: SxProps = {
   width: "40vw",
   display: "flex",
   flexDirection: "column",
@@ -12,7 +12,7 @@ export const leftGridStyles: SxProps = {
   backgroundColor: theme.palette.primary.main,
 };
 
-export const rightGridStyles: SxProps = {
+export const secondaryGridStyles: SxProps = {
   width: "60vw",
   flexDirection: "column",
   backgroundColor: theme.palette.secondary.main,

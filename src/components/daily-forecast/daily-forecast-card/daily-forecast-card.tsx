@@ -2,13 +2,14 @@ import { DailyForecast } from "../../../types";
 import { Box, Card, Typography } from "@mui/material";
 import { dailyForecastTemperatureBoxStyles } from "./styles";
 import { theme } from "../../../theme";
-import { periodicForecastCardStyles } from "../../../styles/components/card";
+import { FC } from "react";
+import { periodicForecastCardStyles } from "../../../styles/index";
 
 type DailyForecastCardProps = {
   data: DailyForecast;
 };
 
-export const DailyForecastCard = ({ data }: DailyForecastCardProps) => {
+export const DailyForecastCard: FC<DailyForecastCardProps> = ({ data }) => {
   return (
     <Card sx={periodicForecastCardStyles}>
       <Typography variant="body1">{data.day}</Typography>

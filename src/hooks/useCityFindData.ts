@@ -3,7 +3,7 @@ import { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { CityFind } from "../types";
 import { fetchCityFind } from "../api";
-import { getErrorMessage } from "../utilities";
+import { getErrorMessage } from "../utils";
 
 export const useCityFindData = () => {
   const city = useSelector((state: RootState) => state.search.searchCity);
@@ -35,7 +35,6 @@ export const useCityFindData = () => {
         setCityFind(cityFind);
       } catch (error) {
         setError(getErrorMessage(error));
-        console.error(error);
       } finally {
         setLoading(false);
       }

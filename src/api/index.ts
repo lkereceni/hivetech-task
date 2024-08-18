@@ -5,7 +5,7 @@ import {
   DailyForecastInterface,
   HourlyForecastInterface,
   UVIndexInterface,
-} from "./interfaces";
+} from "../types/api";
 import { CityCoord } from "../types";
 
 export const fetchCurrentWeather = async (

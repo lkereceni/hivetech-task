@@ -3,7 +3,7 @@ import { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { DailyForecast } from "../types";
 import { fetchDailyForecast } from "../api";
-import { getErrorMessage, getShortDayName } from "../utilities";
+import { getErrorMessage, getShortDayName } from "../utils";
 
 export const useDailyForecastData = () => {
   const city = useSelector((state: RootState) => state.search.selectedCity);
@@ -37,7 +37,6 @@ export const useDailyForecastData = () => {
         setDailyForecast(dailyForecast);
       } catch (error) {
         setError(getErrorMessage(error));
-        console.error(error);
       } finally {
         setLoading(false);
       }

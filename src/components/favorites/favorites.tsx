@@ -1,14 +1,17 @@
 import { Favorite } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { MouseEvent, useState } from "react";
-import useFavoritesLocalStorage from "../../hooks/use-favorites-local-storage";
 import { useDispatch } from "react-redux";
 import { setSelectedCity } from "../../store/city-search-slice";
 import { CityFind } from "../../types";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { LocalStorage } from "../../enums";
 
 export const Favorites = () => {
   const dispatch = useDispatch();
-  const { favorites } = useFavoritesLocalStorage();
+  const { storageItems: favorites } = useLocalStorage<CityFind>(
+    LocalStorage.Favorites
+  );
 
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 

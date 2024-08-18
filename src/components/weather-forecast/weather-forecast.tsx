@@ -1,5 +1,5 @@
 import { CircularProgress, IconButton, Stack, Typography } from "@mui/material";
-import { useWeatherForecastData } from "../../hooks/use-weather-forecast-data";
+import { useWeatherForecastData } from "../../hooks/useWeatherForecastData";
 import {
   favoriteIconStyles,
   weatherForecastCityStyles,
@@ -10,9 +10,11 @@ import { theme } from "../../theme";
 import { WeatherInfoCard } from "../weather-info-card/weather-info-card";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import useFavoritesLocalStorage from "../../hooks/use-favorites-local-storage";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { CityFind } from "../../types";
+import { LocalStorage } from "../../enums";
 
 export const WeatherForecast = () => {
   const { weatherForecast, loading, error } = useWeatherForecastData();
@@ -22,16 +24,20 @@ export const WeatherForecast = () => {
   );
 
   const [favoriteIconState, setFavoriteIconState] = useState(false);
-  const { favorites, addFavorite, removeFavorite } = useFavoritesLocalStorage();
+  const {
+    storageItems: favorites,
+    addStorageItem,
+    removeStorageItem,
+  } = useLocalStorage<CityFind>(LocalStorage.Favorites);
 
   const handleAddFavorite = () => {
     if (selectedCity && !favorites.includes(selectedCity)) {
-      addFavorite(selectedCity);
+      addStorageItem(selectedCity);
     }
   };
 
   const handleRemoveFavorite = () => {
-    removeFavorite(selectedCity);
+    removeStorageItem(selectedCity);
   };
 
   const handleOnClickFavorite = () => {
@@ -64,10 +70,33 @@ export const WeatherForecast = () => {
     return null;
   }
 
+  const weatherInfo: { label: string; value: string | number }[] = [
+    {
+      label: "UV INDEX",
+      value: weatherForecast.uvIndex,
+    },
+    {
+      label: "VISIBILITY",
+      value: weatherForecast.visibility + "m",
+    },
+    {
+      label: "WIND",
+      value: weatherForecast.windSpeed.toFixed(2) + "km/h",
+    },
+    {
+      label: "HUMIDITY",
+      value: weatherForecast.humidity + "%",
+    },
+    {
+      label: "PRESSURE",
+      value: weatherForecast.pressure + "hPa",
+    },
+  ];
+
   return (
     <>
-      <Stack direction={"column"} spacing={1} alignItems={"center"}>
-        <Stack direction={"row"} alignItems={"center"} spacing={2}>
+      <Stack direction="column" spacing={1} alignItems="center">
+        <Stack direction="row" alignItems="center" spacing={2}>
           <Typography variant="h1" sx={weatherForecastCityStyles}>
             {weatherForecast.city}
           </Typography>
@@ -90,30 +119,16 @@ export const WeatherForecast = () => {
         {`Feels like ${weatherForecast.feelsLikeTemperature}°C`}
       </Typography>
       <Stack
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        flexWrap={"wrap"}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        flexWrap="wrap"
         gap={4}
         marginTop={10}
       >
-        <WeatherInfoCard label="UV INDEX" value={weatherForecast.uvIndex} />
-        <WeatherInfoCard
-          label="VISIBILITY"
-          value={`${weatherForecast.visibility}m`}
-        />
-        <WeatherInfoCard
-          label="WIND"
-          value={`${weatherForecast.windSpeed.toFixed(2)}km/h`}
-        />
-        <WeatherInfoCard
-          label="HUMIDITY"
-          value={`${weatherForecast.humidity}%`}
-        />
-        <WeatherInfoCard
-          label="PRESSURE"
-          value={`${weatherForecast.pressure}hPa`}
-        />
+        {weatherInfo.map((info, index) => (
+          <WeatherInfoCard key={index} label={info.label} value={info.value} />
+        ))}
       </Stack>
     </>
   );

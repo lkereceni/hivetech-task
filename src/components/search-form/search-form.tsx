@@ -12,7 +12,7 @@ import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { Form, searchTextFieldStyles } from "./styles";
 import { Search } from "@mui/icons-material";
 import { theme } from "../../theme";
-import { useCityFindData } from "../../hooks/use-city-find";
+import { useCityFindData } from "../../hooks/useCityFindData";
 import { CityFind } from "../../types";
 import { z } from "zod";
 import { cityValidationSchema } from "../../zod/schema";
@@ -107,7 +107,7 @@ export const SearchForm = () => {
           />
         )}
       />
-      <IconButton type={"submit"} sx={{ color: theme.palette.secondary.light }}>
+      <IconButton type="submit" sx={{ color: theme.palette.secondary.light }}>
         <Search />
       </IconButton>
     </Form>

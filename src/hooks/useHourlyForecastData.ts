@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { HourlyForecast } from "../types";
 import { fetchHourlyForecast } from "../api";
-import { getErrorMessage, getHours } from "../utilities";
+import { getErrorMessage, getHours } from "../utils";
 
 export const useHourlyForecastData = () => {
   const city = useSelector((state: RootState) => state.search.selectedCity);
@@ -11,8 +11,8 @@ export const useHourlyForecastData = () => {
   const [hourlyForecast, setHourlyForecast] = useState<HourlyForecast[] | null>(
     null
   );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!city) return;
@@ -36,7 +36,6 @@ export const useHourlyForecastData = () => {
         setHourlyForecast(hourlyForecast);
       } catch (error) {
         setError(getErrorMessage(error));
-        console.error(error);
       } finally {
         setLoading(false);
       }

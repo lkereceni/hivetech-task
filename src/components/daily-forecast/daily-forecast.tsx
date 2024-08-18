@@ -1,8 +1,8 @@
-import { useDailyForecastData } from "../../hooks/use-daily-forecast-data";
+import { useDailyForecastData } from "../../hooks/useDailyForecastData";
 import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
 import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
-import { PeriodicForecastLoading } from "../loading/period-forecast-loading/periodic-forecast-loading";
+import { PeriodicForecastLoading } from "..";
 
 export const DailyForecast = () => {
   const { dailyForecast, loading, error } = useDailyForecastData();
@@ -16,7 +16,7 @@ export const DailyForecast = () => {
   return (
     <>
       <Grid
-        display={"grid"}
+        display="grid"
         gridTemplateColumns={`repeat(${dailyForecast?.length}, 1fr)`}
         gap={2}
         sx={hourlyForecastGridStyles}
