@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { GLOBAL_STRINGS } from "../utilities";
+import { CityFind } from "../types";
 
 const useFavoritesLocalStorage = () => {
-  const [favorites, setFavorites] = useState<string[]>(() => {
+  const [favorites, setFavorites] = useState<CityFind[]>(() => {
     try {
       const item = localStorage.getItem(GLOBAL_STRINGS.favorites);
       return item ? JSON.parse(item) : [];
@@ -20,11 +21,11 @@ const useFavoritesLocalStorage = () => {
     }
   }, [GLOBAL_STRINGS.favorites, favorites]);
 
-  const addFavorite = (item: string) => {
+  const addFavorite = (item: CityFind) => {
     setFavorites((prev) => [...prev, item]);
   };
 
-  const removeFavorite = (item: string) => {
+  const removeFavorite = (item: CityFind) => {
     setFavorites((prev) => prev.filter((i) => i !== item));
   };
 

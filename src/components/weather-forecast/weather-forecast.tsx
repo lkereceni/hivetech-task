@@ -11,23 +11,27 @@ import { WeatherInfoCard } from "../weather-info-card/weather-info-card";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import useFavoritesLocalStorage from "../../hooks/use-favorites-local-storage";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 export const WeatherForecast = () => {
   const { weatherForecast, loading, error } = useWeatherForecastData();
 
-  const city = weatherForecast?.city ?? "";
+  const selectedCity = useSelector(
+    (state: RootState) => state.search.selectedCity
+  );
 
   const [favoriteIconState, setFavoriteIconState] = useState(false);
   const { favorites, addFavorite, removeFavorite } = useFavoritesLocalStorage();
 
   const handleAddFavorite = () => {
-    if (city && !favorites.includes(city)) {
-      addFavorite(city);
+    if (selectedCity && !favorites.includes(selectedCity)) {
+      addFavorite(selectedCity);
     }
   };
 
   const handleRemoveFavorite = () => {
-    removeFavorite(city);
+    removeFavorite(selectedCity);
   };
 
   const handleOnClickFavorite = () => {
@@ -37,9 +41,11 @@ export const WeatherForecast = () => {
   };
 
   useEffect(() => {
-    const favState: boolean = favorites.includes(city);
+    const favState: boolean = favorites.some(
+      (obj) => obj.id === selectedCity.id
+    );
     setFavoriteIconState(favState);
-  }, [city]);
+  }, [selectedCity]);
 
   if (loading) {
     return (
