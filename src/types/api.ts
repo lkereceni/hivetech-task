@@ -67,22 +67,10 @@ interface CityFindInterface {
   ];
 }
 
-interface WeatherAlertInterface {
-  alerts: [
-    {
-      regions: string[];
-      severity: string;
-      title: string;
-      uri: string;
-    }
-  ];
-}
-
 export type {
   CurrentWeatherInterface,
   UVIndexInterface,
   HourlyForecastInterface,
   DailyForecastInterface,
   CityFindInterface,
-  WeatherAlertInterface,
 };

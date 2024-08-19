@@ -6,7 +6,7 @@ export const weatherForecastBoxContainerStyles: SxProps = {
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
-  gap: 6,
+  gap: 3,
 };
 
 export const weatherForecastCityStyles: SxProps = {

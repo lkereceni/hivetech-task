@@ -40,10 +40,3 @@ export type CityFind = {
 };
 
 export type ForecastTabOptions = "hourly" | "daily";
-
-export type WeatherAlert = {
-  regions: string[];
-  severity: string;
-  title: string;
-  uri: string;
-};

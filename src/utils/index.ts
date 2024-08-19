@@ -29,18 +29,3 @@ export const getShortDayName = (dateString: string): string => {
 
   return date.toLocaleDateString("en-US", options);
 };
-
-export const getSeverity = (
-  apiSeverity: string
-): "info" | "warning" | "error" => {
-  switch (apiSeverity) {
-    case "Advisory":
-      return "info";
-    case "Watch":
-      return "warning";
-    case "Warning":
-      return "error";
-    default:
-      return "info";
-  }
-};
