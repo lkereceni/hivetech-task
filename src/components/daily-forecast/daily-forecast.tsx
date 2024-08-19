@@ -1,11 +1,11 @@
-import { useDailyForecastData } from "../../hooks/useDailyForecastData";
 import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
 import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
 import { PeriodicForecastLoading } from "..";
+import { useForecastData } from "../../hooks/useForecastData";
 
 export const DailyForecast = () => {
-  const { dailyForecast, loading, error } = useDailyForecastData();
+  const { dailyForecast, loading, error } = useForecastData("daily");
 
   if (loading) {
     return <PeriodicForecastLoading />;

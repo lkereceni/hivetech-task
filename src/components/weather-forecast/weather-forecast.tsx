@@ -98,6 +98,14 @@ export const WeatherForecast = () => {
 
   return (
     <>
+      {weatherAlerts ? (
+        <WeatherAlert
+          text={weatherAlerts.title}
+          subText={weatherAlerts.regions ? weatherAlerts.regions[0] : undefined}
+          severity={weatherAlerts.severity}
+          href={weatherAlerts.uri}
+        />
+      ) : null}
       <Stack direction="row" spacing={2} alignItems="baseline">
         <Stack direction="column" alignItems="center" spacing={1}>
           <Typography variant="h1" sx={weatherForecastCityStyles}>
@@ -134,14 +142,6 @@ export const WeatherForecast = () => {
           <WeatherInfoCard key={index} label={info.label} value={info.value} />
         ))}
       </Stack>
-      {weatherAlerts ? (
-        <WeatherAlert
-          text={weatherAlerts.title}
-          subText={weatherAlerts.regions ? weatherAlerts.regions[0] : undefined}
-          severity={weatherAlerts.severity}
-          href={weatherAlerts.uri}
-        />
-      ) : null}
     </>
   );
 };

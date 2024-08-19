@@ -1,4 +1,4 @@
-export enum ForecastTabs {
+export enum Forecast {
   Hourly = "hourly",
   Daily = "daily",
 }

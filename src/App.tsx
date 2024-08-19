@@ -6,16 +6,13 @@ import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
 import { SyntheticEvent, useState } from "react";
 import { DailyForecast } from "./components/daily-forecast/daily-forecast";
 import { Favorites } from "./components/favorites/favorites";
-import { ForecastTabs } from "./enums";
-import { ForecastTabOptions } from "./types";
+import { ForecastOption } from "./types";
+import { Forecast } from "./enums";
 
 function App() {
-  const [tabValue, setTabValue] = useState<ForecastTabOptions>("hourly");
+  const [tabValue, setTabValue] = useState<ForecastOption>("hourly");
 
-  const handleTabChange = (
-    event: SyntheticEvent,
-    newValue: ForecastTabOptions
-  ) => {
+  const handleTabChange = (event: SyntheticEvent, newValue: ForecastOption) => {
     event.preventDefault();
 
     setTabValue(newValue);
@@ -38,16 +35,12 @@ function App() {
       <Grid sx={secondaryGridStyles}>
         <Stack direction="row" justifyContent="space-between" paddingRight={4}>
           <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab value={ForecastTabs.Hourly} label={ForecastTabs.Hourly} />
-            <Tab value={ForecastTabs.Daily} label={ForecastTabs.Daily} />
+            <Tab value={Forecast.Hourly} label={Forecast.Hourly} />
+            <Tab value={Forecast.Daily} label={Forecast.Daily} />
           </Tabs>
           <Favorites />
         </Stack>
-        {tabValue === ForecastTabs.Hourly ? (
-          <HourlyForecast />
-        ) : (
-          <DailyForecast />
-        )}
+        {tabValue === Forecast.Hourly ? <HourlyForecast /> : <DailyForecast />}
       </Grid>
     </Stack>
   );

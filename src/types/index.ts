@@ -1,3 +1,5 @@
+import { Forecast } from "../enums";
+
 export type WeatherForecast = {
   city: string;
   temperature: number;
@@ -39,7 +41,7 @@ export type CityFind = {
   country: string;
 };
 
-export type ForecastTabOptions = "hourly" | "daily";
+export type ForecastOption = `${Forecast}`;
 
 export type WeatherAlert = {
   regions: string[];
