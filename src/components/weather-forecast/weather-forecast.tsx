@@ -15,9 +15,12 @@ import { RootState } from "../../store/store";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { CityFind } from "../../types";
 import { LocalStorage } from "../../enums";
+import { WeatherAlert } from "../weather-alert/weather-alert";
+import { useWeatherAlertData } from "../../hooks/useWeatherAlertData";
 
 export const WeatherForecast = () => {
   const { weatherForecast, loading, error } = useWeatherForecastData();
+  const { weatherAlerts } = useWeatherAlertData();
 
   const selectedCity = useSelector(
     (state: RootState) => state.search.selectedCity
@@ -95,41 +98,50 @@ export const WeatherForecast = () => {
 
   return (
     <>
-      <Stack direction="column" spacing={1} alignItems="center">
-        <Stack direction="row" alignItems="center" spacing={2}>
+      <Stack direction="row" spacing={2} alignItems="baseline">
+        <Stack direction="column" alignItems="center" spacing={1}>
           <Typography variant="h1" sx={weatherForecastCityStyles}>
             {weatherForecast.city}
           </Typography>
-          <IconButton onClick={handleOnClickFavorite}>
-            {!favoriteIconState ? (
-              <FavoriteBorder sx={favoriteIconStyles} />
-            ) : (
-              <Favorite sx={favoriteIconStyles} />
-            )}
-          </IconButton>
+          <Typography variant="body1" sx={weatherForecastDescriptionStyles}>
+            {weatherForecast.description}
+          </Typography>
         </Stack>
-        <Typography variant="body1" sx={weatherForecastDescriptionStyles}>
-          {weatherForecast.description}
+        <IconButton onClick={handleOnClickFavorite}>
+          {!favoriteIconState ? (
+            <FavoriteBorder sx={favoriteIconStyles} />
+          ) : (
+            <Favorite sx={favoriteIconStyles} />
+          )}
+        </IconButton>
+      </Stack>
+      <Stack direction="column" spacing={1} alignItems="center">
+        <Typography variant="body1" sx={weatherForecastTemperatureStyles}>
+          {weatherForecast.temperature}°C
+        </Typography>
+        <Typography variant="body1">
+          {`Feels like ${weatherForecast.feelsLikeTemperature}°C`}
         </Typography>
       </Stack>
-      <Typography variant="body1" sx={weatherForecastTemperatureStyles}>
-        {weatherForecast.temperature}°C
-      </Typography>
-      <Typography variant="body1">
-        {`Feels like ${weatherForecast.feelsLikeTemperature}°C`}
-      </Typography>
       <Stack
         direction="row"
         justifyContent="center"
         alignItems="center"
         flexWrap="wrap"
         gap={4}
-        marginTop={10}
       >
         {weatherInfo.map((info, index) => (
           <WeatherInfoCard key={index} label={info.label} value={info.value} />
         ))}
       </Stack>
+      {weatherAlerts ? (
+        <WeatherAlert
+          text={weatherAlerts.title}
+          subText={weatherAlerts.regions ? weatherAlerts.regions[0] : undefined}
+          severity={weatherAlerts.severity}
+          href={weatherAlerts.uri}
+        />
+      ) : null}
     </>
   );
 };

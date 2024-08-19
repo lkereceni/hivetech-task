@@ -7,7 +7,7 @@ export const primaryGridStyles: SxProps = {
   flexDirection: "column",
   alignItems: "center",
   flexShrink: 0,
-  gap: 10,
+  gap: 6,
   padding: "64px",
   backgroundColor: theme.palette.primary.main,
 };
