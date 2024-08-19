@@ -5,6 +5,7 @@ import {
   DailyForecastInterface,
   HourlyForecastInterface,
   UVIndexInterface,
+  WeatherAlertInterface,
 } from "../types/api";
 import { CityCoord } from "../types";
 
@@ -66,6 +67,20 @@ export const fetchCityFind = async (
   const { data } = await axios.get(
     `${import.meta.env.VITE_BASE_API_URL}find?q=${city}&appid=${
       import.meta.env.VITE_API_KEY
+    }`
+  );
+
+  return data;
+};
+
+export const fetchWeatherAlert = async (
+  coord: CityCoord
+): Promise<WeatherAlertInterface> => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_WEATHERBIT_BASE_API_URL}alerts?lat=${
+      coord.lat
+    }&lon=${coord.lon}&days=10&units=M&key=${
+      import.meta.env.VITE_WEATHERBIT_API_KEY
     }`
   );
 
