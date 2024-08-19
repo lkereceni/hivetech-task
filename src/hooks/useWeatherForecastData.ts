@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { CityCoord, WeatherForecast } from "../types";
+import { WeatherForecast } from "../types";
 import { fetchCurrentWeather, fetchUVIndex } from "../api";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { getErrorMessage } from "../utilities";
+import { getKph, getErrorMessage } from "../utils";
 
 export const useWeatherForecastData = () => {
-  const city = useSelector((state: RootState) => state.search.city);
+  const city = useSelector((state: RootState) => state.search.selectedCity);
 
   const [weatherForecast, setWeatherForecast] =
     useState<WeatherForecast | null>(null);
@@ -22,13 +22,9 @@ export const useWeatherForecastData = () => {
 
     const fetchWeatherData = async () => {
       try {
-        const data = await fetchCurrentWeather(city);
-        const coord: CityCoord = {
-          lat: data.coord.lat,
-          lon: data.coord.lon,
-        };
+        const data = await fetchCurrentWeather(city.name);
 
-        const uvData = await fetchUVIndex(coord.lat, coord.lon);
+        const uvData = await fetchUVIndex(city.coord);
 
         setWeatherForecast({
           city: data.name,
@@ -36,10 +32,13 @@ export const useWeatherForecastData = () => {
           description: data.weather[0].description,
           uvIndex: Math.round(uvData.value),
           visibility: data.visibility,
+          humidity: data.main.humidity,
+          windSpeed: getKph(data.wind.speed),
+          feelsLikeTemperature: Math.round(data.main.feels_like),
+          pressure: data.main.pressure,
         });
       } catch (error) {
         setError(getErrorMessage(error));
-        console.error("Error fetching weather data:", error);
       } finally {
         setLoading(false);
       }
