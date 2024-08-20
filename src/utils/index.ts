@@ -7,8 +7,10 @@ export const GLOBAL_STRINGS = {
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof AxiosError && error.response?.data) {
     return `Error ${error.response?.data.cod}: ${error.response?.data.message}`;
+  } else if (typeof error === "string") {
+    return error;
   } else {
-    return "Failed to fetch weather data";
+    return "Failed to fetch data";
   }
 };
 

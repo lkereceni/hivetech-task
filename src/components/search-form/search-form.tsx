@@ -2,33 +2,40 @@ import {
   ChangeEvent,
   FormEventHandler,
   SyntheticEvent,
+  useEffect,
   useRef,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { setSearch, setSelectedCity } from "../../store/city-search-slice";
+import { setSearch, setSelectedCity } from "../../redux/city-search-slice";
 import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { Form, searchTextFieldStyles } from "./styles";
 import { Search } from "@mui/icons-material";
 import { theme } from "../../theme";
-import { useCityFindData } from "../../hooks/useCityFindData";
 import { CityFind } from "../../types";
 import { z } from "zod";
 import { cityValidationSchema } from "../../zod/schema";
+import { fetchCityFindData } from "../../redux/city-find-slice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 export const SearchForm = () => {
-  const dispatch = useDispatch();
-  const selectedCity = useSelector(
-    (state: RootState) => state.search.selectedCity
+  const dispatch = useAppDispatch();
+  const searchCity = useAppSelector((state) => state.search.searchCity);
+  const selectedCity = useAppSelector((state) => state.search.selectedCity);
+
+  const { data: cityFinds, loading } = useAppSelector(
+    (state) => state.cityFind
   );
-  const { cityFind, loading } = useCityFindData();
+
   const [city, setCity] = useState(selectedCity);
   const [inputValue, setInputValue] = useState("");
 
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchCityFindData(searchCity));
+  }, [dispatch, searchCity]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -69,7 +76,7 @@ export const SearchForm = () => {
       <Autocomplete
         disablePortal
         forcePopupIcon={false}
-        options={cityFind ?? []}
+        options={cityFinds ?? []}
         loading={loading}
         inputValue={inputValue}
         getOptionLabel={(option) => option.name}

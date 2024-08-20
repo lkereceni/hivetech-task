@@ -1,5 +1,4 @@
 import { CircularProgress, IconButton, Stack, Typography } from "@mui/material";
-import { useWeatherForecastData } from "../../hooks/useWeatherForecastData";
 import {
   favoriteIconStyles,
   weatherForecastCityStyles,
@@ -10,21 +9,24 @@ import { theme } from "../../theme";
 import { WeatherInfoCard } from "../weather-info-card/weather-info-card";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { CityFind } from "../../types";
 import { LocalStorage } from "../../enums";
 import { WeatherAlert } from "../weather-alert/weather-alert";
-import { useWeatherAlertData } from "../../hooks/useWeatherAlertData";
+import { fetchWeatherAlertData } from "../../redux/weather-alert-slice";
+import { fetchCurrentForecastData } from "../../redux/current-forecast-slice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 export const WeatherForecast = () => {
-  const { weatherForecast, loading, error } = useWeatherForecastData();
-  const { weatherAlerts } = useWeatherAlertData();
+  const dispatch = useAppDispatch();
+  const selectedCity = useAppSelector((state) => state.search.selectedCity);
 
-  const selectedCity = useSelector(
-    (state: RootState) => state.search.selectedCity
-  );
+  const {
+    data: weatherForecast,
+    loading,
+    error,
+  } = useAppSelector((state) => state.currentForecast);
+  const { data: weatherAlert } = useAppSelector((state) => state.weatherAlert);
 
   const [favoriteIconState, setFavoriteIconState] = useState(false);
   const {
@@ -32,6 +34,11 @@ export const WeatherForecast = () => {
     addStorageItem,
     removeStorageItem,
   } = useLocalStorage<CityFind>(LocalStorage.Favorites);
+
+  useEffect(() => {
+    dispatch(fetchCurrentForecastData(selectedCity));
+    dispatch(fetchWeatherAlertData(selectedCity.coord));
+  }, [dispatch, selectedCity.coord]);
 
   const handleAddFavorite = () => {
     if (selectedCity && !favorites.includes(selectedCity)) {
@@ -98,12 +105,12 @@ export const WeatherForecast = () => {
 
   return (
     <>
-      {weatherAlerts ? (
+      {weatherAlert ? (
         <WeatherAlert
-          text={weatherAlerts.title}
-          subText={weatherAlerts.regions ? weatherAlerts.regions[0] : undefined}
-          severity={weatherAlerts.severity}
-          href={weatherAlerts.uri}
+          text={weatherAlert.title}
+          subText={weatherAlert.regions ? weatherAlert.regions[0] : undefined}
+          severity={weatherAlert.severity}
+          href={weatherAlert.uri}
         />
       ) : null}
       <Stack direction="row" spacing={2} alignItems="baseline">

@@ -2,10 +2,21 @@ import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "./styles";
 import { HourlyForecastCard } from "./hourly-forecast-card/hourly-forecast-card";
 import { PeriodicForecastLoading } from "..";
-import { useForecastData } from "../../hooks/useForecastData";
+import { useEffect } from "react";
+import { fetchHourlyForecastData } from "../../redux/hourly-forecast-slice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 export const HourlyForecast = () => {
-  const { hourlyForecast, loading, error } = useForecastData("hourly");
+  const dispatch = useAppDispatch();
+  const selectedCity = useAppSelector((state) => state.search.selectedCity);
+
+  const { data, loading, error } = useAppSelector(
+    (state) => state.hourlyForecast
+  );
+
+  useEffect(() => {
+    dispatch(fetchHourlyForecastData(selectedCity.coord));
+  }, [dispatch, selectedCity.coord]);
 
   if (loading) {
     return <PeriodicForecastLoading />;
@@ -17,11 +28,11 @@ export const HourlyForecast = () => {
     <>
       <Grid
         display="grid"
-        gridTemplateColumns={`repeat(${hourlyForecast?.length}, 1fr)`}
+        gridTemplateColumns={`repeat(${data?.length}, 1fr)`}
         gap={2}
         sx={hourlyForecastGridStyles}
       >
-        {hourlyForecast?.map((entry, index) => (
+        {data?.map((entry, index) => (
           <HourlyForecastCard key={index} data={entry} />
         ))}
       </Grid>

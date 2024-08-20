@@ -1,5 +1,6 @@
 import { Forecast } from "../enums";
 
+// Types
 export type WeatherForecast = {
   city: string;
   temperature: number;
@@ -49,3 +50,10 @@ export type WeatherAlert = {
   title: string;
   uri: string;
 };
+
+// Interfaces
+export interface InitialFetchState<T> {
+  data: T | null;
+  loading: boolean;
+  error: string;
+}

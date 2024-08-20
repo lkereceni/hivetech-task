@@ -2,10 +2,20 @@ import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
 import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
 import { PeriodicForecastLoading } from "..";
-import { useForecastData } from "../../hooks/useForecastData";
+import { useEffect } from "react";
+import { fetchDailyForecastData } from "../../redux/daily-forecast-slice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 export const DailyForecast = () => {
-  const { dailyForecast, loading, error } = useForecastData("daily");
+  const dispatch = useAppDispatch();
+  const selectedCity = useAppSelector((state) => state.search.selectedCity);
+  const { data, loading, error } = useAppSelector(
+    (state) => state.dailyForecast
+  );
+
+  useEffect(() => {
+    dispatch(fetchDailyForecastData(selectedCity.coord));
+  }, [dispatch, selectedCity.coord]);
 
   if (loading) {
     return <PeriodicForecastLoading />;
@@ -17,11 +27,11 @@ export const DailyForecast = () => {
     <>
       <Grid
         display="grid"
-        gridTemplateColumns={`repeat(${dailyForecast?.length}, 1fr)`}
+        gridTemplateColumns={`repeat(${data?.length}, 1fr)`}
         gap={2}
         sx={hourlyForecastGridStyles}
       >
-        {dailyForecast?.map((entry, index) => (
+        {data?.map((entry, index) => (
           <DailyForecastCard key={index} data={entry} />
         ))}
       </Grid>

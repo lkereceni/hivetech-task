@@ -9,7 +9,7 @@ import {
 } from "../types/api";
 import { CityCoord } from "../types";
 
-export const fetchCurrentWeather = async (
+export const fetchCurrentForecast = async (
   city: string
 ): Promise<CurrentWeatherInterface> => {
   const { data } = await axios.get(
