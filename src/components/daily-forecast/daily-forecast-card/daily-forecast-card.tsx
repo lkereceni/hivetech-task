@@ -4,6 +4,7 @@ import { dailyForecastTemperatureBoxStyles } from "./styles";
 import { theme } from "../../../theme";
 import { FC } from "react";
 import { periodicForecastCardStyles } from "../../../styles/index";
+import { getShortDayName } from "../../../utils";
 
 type DailyForecastCardProps = {
   data: DailyForecast;
@@ -12,7 +13,7 @@ type DailyForecastCardProps = {
 export const DailyForecastCard: FC<DailyForecastCardProps> = ({ data }) => {
   return (
     <Card sx={periodicForecastCardStyles}>
-      <Typography variant="body1">{data.day}</Typography>
+      <Typography variant="body1">{getShortDayName(data.day)}</Typography>
       <img
         width={42}
         height={42}

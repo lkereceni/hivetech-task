@@ -1,4 +1,4 @@
-import { Forecast } from "../enums";
+import { Forecast, ForecastView } from "../enums";
 
 // Types
 export type WeatherForecast = {
@@ -44,11 +44,18 @@ export type CityFind = {
 
 export type ForecastOption = `${Forecast}`;
 
+export type ForecastViewOption = `${ForecastView}`;
+
 export type WeatherAlert = {
   regions: string[];
   severity: string;
   title: string;
   uri: string;
+};
+
+export type MuiChartData<T> = {
+  xAxis: [{ data: T[] }];
+  series: [{ data: T[] }];
 };
 
 // Interfaces

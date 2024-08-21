@@ -3,6 +3,11 @@ export enum Forecast {
   Daily = "daily",
 }
 
+export enum ForecastView {
+  Chart = "chart",
+  Card = "card",
+}
+
 export enum LocalStorage {
   Favorites = "favorites",
 }

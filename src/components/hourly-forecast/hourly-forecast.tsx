@@ -2,11 +2,17 @@ import { Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "./styles";
 import { HourlyForecastCard } from "./hourly-forecast-card/hourly-forecast-card";
 import { PeriodicForecastLoading } from "..";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { fetchHourlyForecastData } from "../../redux/hourly-forecast-slice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { ForecastView } from "../../enums";
+import { LineChart } from "@mui/x-charts";
 
-export const HourlyForecast = () => {
+type HourlyForecastProps = {
+  toggleOption?: `${ForecastView}`;
+};
+
+export const HourlyForecast: FC<HourlyForecastProps> = ({ toggleOption }) => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector((state) => state.search.selectedCity);
 
@@ -26,16 +32,42 @@ export const HourlyForecast = () => {
 
   return (
     <>
-      <Grid
-        display="grid"
-        gridTemplateColumns={`repeat(${data?.length}, 1fr)`}
-        gap={2}
-        sx={hourlyForecastGridStyles}
-      >
-        {data?.map((entry, index) => (
-          <HourlyForecastCard key={index} data={entry} />
-        ))}
-      </Grid>
+      {toggleOption === "card" ? (
+        <Grid
+          display="grid"
+          gridTemplateColumns={`repeat(${data?.length}, 1fr)`}
+          gap={2}
+          sx={hourlyForecastGridStyles}
+        >
+          {data?.map((entry, index) => (
+            <HourlyForecastCard key={index} data={entry} />
+          ))}
+        </Grid>
+      ) : (
+        <LineChart
+          xAxis={[
+            {
+              data: data ? data.map((entry) => entry.time) : undefined,
+              scaleType: "point",
+            },
+          ]}
+          yAxis={[
+            {
+              label: "Temperature (°C)",
+            },
+          ]}
+          series={[
+            {
+              data: data ? data.map((entry) => entry.temperature) : undefined,
+              color: "#82B1FF",
+            },
+          ]}
+          grid={{
+            horizontal: true,
+          }}
+          height={300}
+        />
+      )}
     </>
   );
 };

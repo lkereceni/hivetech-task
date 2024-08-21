@@ -18,7 +18,7 @@ export const fetchDailyForecastData = createAsyncThunk(
         maxTemperature: Math.round(entry.app_max_temp),
         minTemperature: Math.round(entry.app_min_temp),
         icon: entry.weather.icon,
-        day: getShortDayName(entry.datetime),
+        day: entry.datetime,
       })
     );
 
