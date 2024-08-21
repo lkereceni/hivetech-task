@@ -55,5 +55,15 @@ export const theme = createTheme({
         },
       },
     },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          color: "#B0BEC5",
+          "&.Mui-selected": {
+            color: "#82B1FF",
+          },
+        },
+      },
+    },
   },
 });

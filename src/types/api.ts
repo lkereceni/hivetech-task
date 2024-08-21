@@ -78,6 +78,16 @@ interface WeatherAlertInterface {
   ];
 }
 
+interface HistoricalWeatherInterface {
+  data: [
+    {
+      datetime: string;
+      max_temp: number;
+      min_temp: number;
+    }
+  ];
+}
+
 export type {
   CurrentWeatherInterface,
   UVIndexInterface,
@@ -85,4 +95,5 @@ export type {
   DailyForecastInterface,
   CityFindInterface,
   WeatherAlertInterface,
+  HistoricalWeatherInterface,
 };

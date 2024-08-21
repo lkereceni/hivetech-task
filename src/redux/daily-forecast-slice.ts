@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CityCoord, DailyForecast, InitialFetchState } from "../types";
 import { fetchDailyForecast } from "../api";
-import { getErrorMessage, getShortDayName } from "../utils";
+import { getErrorMessage } from "../utils";
 
 const initialState: InitialFetchState<DailyForecast[]> = {
   data: null,

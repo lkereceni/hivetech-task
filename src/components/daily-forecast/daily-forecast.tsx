@@ -30,8 +30,6 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
 
   if (error) null;
 
-  console.log(data);
-
   return (
     <>
       {toggleOption === "card" ? (

@@ -17,6 +17,7 @@ import { Favorites } from "./components/favorites/favorites";
 import { ForecastOption, ForecastViewOption } from "./types";
 import { Forecast, ForecastView } from "./enums";
 import { ShowChart, ViewModule } from "@mui/icons-material";
+import { HistoricalWeather } from "./components/historical-weather/historical-weather";
 
 function App() {
   const [tabValue, setTabValue] = useState<ForecastOption>("hourly");
@@ -84,6 +85,7 @@ function App() {
         ) : (
           <DailyForecast toggleOption={toggleButtonValue} />
         )}
+        <HistoricalWeather />
       </Grid>
     </Stack>
   );

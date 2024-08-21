@@ -5,6 +5,7 @@ import weatherAlertReducer from "./weather-alert-slice";
 import hourlyForecastReducer from "./hourly-forecast-slice";
 import dailyForecastReducer from "./daily-forecast-slice";
 import currentForecastReducer from "./current-forecast-slice";
+import historicalWeatherReducer from "./historical-weather-slice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     weatherAlert: weatherAlertReducer,
     hourlyForecast: hourlyForecastReducer,
     dailyForecast: dailyForecastReducer,
+    historicalWeather: historicalWeatherReducer,
   },
 });
 

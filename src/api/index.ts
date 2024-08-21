@@ -3,11 +3,13 @@ import {
   CityFindInterface,
   CurrentWeatherInterface,
   DailyForecastInterface,
+  HistoricalWeatherInterface,
   HourlyForecastInterface,
   UVIndexInterface,
   WeatherAlertInterface,
 } from "../types/api";
 import { CityCoord } from "../types";
+import { getISODateFormat, getPastDays } from "../utils";
 
 export const fetchCurrentForecast = async (
   city: string
@@ -80,6 +82,23 @@ export const fetchWeatherAlert = async (
     `${import.meta.env.VITE_WEATHERBIT_BASE_API_URL}alerts?lat=${
       coord.lat
     }&lon=${coord.lon}&days=10&units=M&key=${
+      import.meta.env.VITE_WEATHERBIT_API_KEY
+    }`
+  );
+
+  return data;
+};
+
+export const fetchHistoricalWeather = async (
+  coord: CityCoord
+): Promise<HistoricalWeatherInterface> => {
+  const startDate = getPastDays(10);
+  const endDate = getISODateFormat(new Date());
+
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_WEATHERBIT_BASE_API_URL}history/daily?lat=${
+      coord.lat
+    }&lon=${coord.lon}&start_date=${startDate}&end_date=${endDate}&key=${
       import.meta.env.VITE_WEATHERBIT_API_KEY
     }`
   );

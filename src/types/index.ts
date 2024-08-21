@@ -53,9 +53,10 @@ export type WeatherAlert = {
   uri: string;
 };
 
-export type MuiChartData<T> = {
-  xAxis: [{ data: T[] }];
-  series: [{ data: T[] }];
+export type HistoricalWeather = {
+  date: string;
+  maxTemperature: number;
+  minTemperature: number;
 };
 
 // Interfaces
