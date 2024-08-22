@@ -3,8 +3,8 @@ import {
   FormEventHandler,
   SyntheticEvent,
   useEffect,
+  useReducer,
   useRef,
-  useState,
 } from "react";
 import { setSearch, setSelectedCity } from "../../redux/city-search-slice";
 import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
@@ -16,6 +16,7 @@ import { z } from "zod";
 import { cityValidationSchema } from "../../zod/schema";
 import { fetchCityFindData } from "../../redux/city-find-slice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { initialState, searchFormReducer } from "./search-form-reducer";
 
 export const SearchForm = () => {
   const dispatch = useAppDispatch();
@@ -26,10 +27,12 @@ export const SearchForm = () => {
     (state) => state.cityFind
   );
 
-  const [city, setCity] = useState(selectedCity);
-  const [inputValue, setInputValue] = useState("");
+  const [state, dispatchReducer] = useReducer(searchFormReducer, {
+    ...initialState,
+    city: selectedCity,
+  });
 
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const { city, inputValue, validationError } = state;
 
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -39,7 +42,7 @@ export const SearchForm = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInputValue(e.target.value);
+    dispatchReducer({ type: "SET_INPUT_VALUE", payload: value });
 
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
@@ -48,11 +51,14 @@ export const SearchForm = () => {
     typingTimeoutRef.current = setTimeout(() => {
       try {
         cityValidationSchema.parse(value);
-        setValidationError(null);
+        dispatchReducer({ type: "SET_VALIDATION_ERROR", payload: null });
         dispatch(setSearch(value));
       } catch (error) {
         if (error instanceof z.ZodError) {
-          setValidationError(error.errors[0].message);
+          dispatchReducer({
+            type: "SET_VALIDATION_ERROR",
+            payload: error.errors[0].message,
+          });
         }
       }
     }, 500);
@@ -61,14 +67,16 @@ export const SearchForm = () => {
   const handleOptionSelect = (e: SyntheticEvent, value: CityFind | null) => {
     e.preventDefault();
     if (value) {
-      setCity(value);
-      setInputValue(value.name);
+      dispatchReducer({ type: "SET_CITY", payload: value });
+      dispatchReducer({ type: "SET_INPUT_VALUE", payload: value.name });
     }
   };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(setSelectedCity(city));
+    if (city) {
+      dispatch(setSelectedCity(city));
+    }
   };
 
   return (

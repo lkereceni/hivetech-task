@@ -18,6 +18,8 @@ export const fetchHistoricalWeatherData = createAsyncThunk(
         date: entry.datetime,
         maxTemperature: entry.max_temp,
         minTemperature: entry.min_temp,
+        windSpeed: entry.wind_spd,
+        windDirection: entry.wind_dir,
       })
     );
 

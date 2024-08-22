@@ -1,6 +1,7 @@
-import { SearchForm, WeatherForecast } from "./components";
+import { DailyForecast, SearchForm, WeatherForecast } from "./components";
 import {
   Box,
+  CircularProgress,
   Grid,
   Stack,
   Tab,
@@ -11,13 +12,18 @@ import {
 import { primaryGridStyles, secondaryGridStyles } from "./styles";
 import { weatherForecastBoxContainerStyles } from "./components/weather-forecast/styles";
 import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
-import { SyntheticEvent, useState } from "react";
-import { DailyForecast } from "./components/daily-forecast/daily-forecast";
+import { SyntheticEvent, useState, startTransition, Suspense } from "react";
 import { Favorites } from "./components/favorites/favorites";
 import { ForecastOption, ForecastViewOption } from "./types";
 import { Forecast, ForecastView } from "./enums";
 import { ShowChart, ViewModule } from "@mui/icons-material";
 import { HistoricalWeather } from "./components/historical-weather/historical-weather";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 function App() {
   const [tabValue, setTabValue] = useState<ForecastOption>("hourly");
@@ -27,7 +33,9 @@ function App() {
   const handleTabChange = (event: SyntheticEvent, newValue: ForecastOption) => {
     event.preventDefault();
 
-    setTabValue(newValue);
+    startTransition(() => {
+      setTabValue(newValue);
+    });
   };
 
   const handleToggleChange = (
@@ -35,7 +43,6 @@ function App() {
     newValue: ForecastViewOption
   ) => {
     event.preventDefault();
-
     setToggleButtonValue(newValue);
   };
 
@@ -78,13 +85,23 @@ function App() {
               <ShowChart />
             </ToggleButton>
           </ToggleButtonGroup>
-          <Favorites />
+          <SignedIn>
+            <Stack direction="row" spacing={1}>
+              <Favorites />
+              <UserButton />
+            </Stack>
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
         </Stack>
-        {tabValue === Forecast.Hourly ? (
-          <HourlyForecast toggleOption={toggleButtonValue} />
-        ) : (
-          <DailyForecast toggleOption={toggleButtonValue} />
-        )}
+        <Suspense fallback={<CircularProgress />}>
+          {tabValue === Forecast.Hourly ? (
+            <HourlyForecast toggleOption={toggleButtonValue} />
+          ) : (
+            <DailyForecast toggleOption={toggleButtonValue} />
+          )}
+        </Suspense>
         <HistoricalWeather />
       </Grid>
     </Stack>

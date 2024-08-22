@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { APISeverity, MaterialUISeverity } from "../enums";
 
 export const GLOBAL_STRINGS = {
   favorites: "favorites",
@@ -32,18 +33,16 @@ export const getShortDayName = (dateString: string): string => {
   return date.toLocaleDateString("en-US", options);
 };
 
-export const getSeverity = (
-  apiSeverity: string
-): "info" | "warning" | "error" => {
+export const getSeverity = (apiSeverity: string): `${MaterialUISeverity}` => {
   switch (apiSeverity) {
-    case "Advisory":
-      return "info";
-    case "Watch":
-      return "warning";
-    case "Warning":
-      return "error";
+    case APISeverity.Advisory:
+      return MaterialUISeverity.Info;
+    case APISeverity.Watch:
+      return MaterialUISeverity.Warning;
+    case APISeverity.Warning:
+      return MaterialUISeverity.Error;
     default:
-      return "info";
+      return MaterialUISeverity.Info;
   }
 };
 

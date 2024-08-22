@@ -84,6 +84,8 @@ interface HistoricalWeatherInterface {
       datetime: string;
       max_temp: number;
       min_temp: number;
+      wind_dir: number;
+      wind_spd: number;
     }
   ];
 }
