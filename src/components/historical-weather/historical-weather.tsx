@@ -43,13 +43,13 @@ export const HistoricalWeather = () => {
       <Stack
         direction="row"
         justifyContent="space-between"
-        alignItems="start"
+        alignItems="center"
         marginTop={6}
         marginRight={2}
       >
         <Stack direction="column" alignItems="start" justifyContent="center">
           <Typography variant="h3">Historical Weather</Typography>
-          <Typography variant="caption">Past 10 days</Typography>
+          <Typography variant="body1">Past 30 days</Typography>
         </Stack>
         <ToggleButtonGroup
           orientation="horizontal"
@@ -99,6 +99,9 @@ export const HistoricalWeather = () => {
                         ? data.map((entry) => Math.round(entry.maxTemperature))
                         : undefined,
                       color: "#FF8A65",
+                      valueFormatter: (value) => {
+                        return `${value}°C`;
+                      },
                     },
                     {
                       id: "minTemp",
@@ -107,18 +110,24 @@ export const HistoricalWeather = () => {
                         ? data.map((entry) => Math.round(entry.minTemperature))
                         : undefined,
                       color: "#82B1FF",
+                      valueFormatter: (value) => {
+                        return `${value}°C`;
+                      },
                     },
                   ]
                 : [
                     {
                       id: "windSpeed",
+                      label: "Wind speed",
                       data: data
                         ? data.map((entry) => getKph(entry.windSpeed))
                         : undefined,
+                      valueFormatter: (value) => {
+                        return `${value?.toFixed(2)}km/h`;
+                      },
                     },
                   ]
             }
-            tooltip={{}}
             slotProps={{
               legend: {
                 direction: "row",
@@ -130,7 +139,9 @@ export const HistoricalWeather = () => {
               },
             }}
             grid={{ horizontal: true }}
-            height={400}
+            sx={{
+              minHeight: 400,
+            }}
           />
         )}
       </Container>

@@ -77,7 +77,7 @@ export const fetchWeatherAlert = async (
 export const fetchHistoricalWeather = async (
   coord: CityCoord
 ): Promise<HistoricalWeatherInterface> => {
-  const startDate = getPastDays(10);
+  const startDate = getPastDays(30);
   const endDate = getISODateFormat(new Date());
 
   const { data } = await weatherbitInstance.get(

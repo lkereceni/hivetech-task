@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "./styles";
 import { HourlyForecastCard } from "./hourly-forecast-card/hourly-forecast-card";
 import { PeriodicForecastLoading } from "..";
@@ -28,7 +28,20 @@ export const HourlyForecast: FC<HourlyForecastProps> = ({ toggleOption }) => {
     return <PeriodicForecastLoading />;
   }
 
-  if (error) null;
+  if (error) {
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 4,
+        }}
+      >
+        {error}
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -58,10 +71,24 @@ export const HourlyForecast: FC<HourlyForecastProps> = ({ toggleOption }) => {
           ]}
           series={[
             {
+              label: "Temperature",
               data: data ? data.map((entry) => entry.temperature) : undefined,
               color: "#82B1FF",
+              valueFormatter: (value) => {
+                return `${value}°C`;
+              },
             },
           ]}
+          slotProps={{
+            legend: {
+              direction: "row",
+              position: {
+                vertical: "bottom",
+                horizontal: "middle",
+              },
+              padding: 2,
+            },
+          }}
           grid={{
             horizontal: true,
           }}

@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
 import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
 import { PeriodicForecastLoading } from "..";
@@ -28,7 +28,20 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
     return <PeriodicForecastLoading />;
   }
 
-  if (error) null;
+  if (error) {
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 4,
+        }}
+      >
+        {error}
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -66,6 +79,9 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
                 ? data.map((entry) => entry.maxTemperature)
                 : undefined,
               color: "#FF8A65",
+              valueFormatter: (value) => {
+                return `${value}°C`;
+              },
             },
             {
               label: "Min temperature",
@@ -73,6 +89,9 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
                 ? data.map((entry) => entry.minTemperature)
                 : undefined,
               color: "#82B1FF",
+              valueFormatter: (value) => {
+                return `${value}°C`;
+              },
             },
           ]}
           slotProps={{

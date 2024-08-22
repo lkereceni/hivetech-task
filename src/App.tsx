@@ -1,41 +1,22 @@
 import { DailyForecast, SearchForm, WeatherForecast } from "./components";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Stack,
-  Tab,
-  Tabs,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import { primaryGridStyles, secondaryGridStyles } from "./styles";
-import { weatherForecastBoxContainerStyles } from "./components/weather-forecast/styles";
 import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
-import { SyntheticEvent, useState, startTransition, Suspense } from "react";
-import { Favorites } from "./components/favorites/favorites";
+import { SyntheticEvent, useState } from "react";
 import { ForecastOption, ForecastViewOption } from "./types";
-import { Forecast, ForecastView } from "./enums";
-import { ShowChart, ViewModule } from "@mui/icons-material";
+import { Forecast } from "./enums";
 import { HistoricalWeather } from "./components/historical-weather/historical-weather";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { Toolbar } from "./components/toolbar/toolbar";
 
 function App() {
-  const [tabValue, setTabValue] = useState<ForecastOption>("hourly");
+  const [forecastTabValue, setForecastTabValue] =
+    useState<ForecastOption>("hourly");
   const [toggleButtonValue, setToggleButtonValue] =
     useState<ForecastViewOption>("card");
 
   const handleTabChange = (event: SyntheticEvent, newValue: ForecastOption) => {
     event.preventDefault();
-
-    startTransition(() => {
-      setTabValue(newValue);
-    });
+    setForecastTabValue(newValue);
   };
 
   const handleToggleChange = (
@@ -56,52 +37,20 @@ function App() {
     >
       <Grid item sx={primaryGridStyles}>
         <SearchForm />
-        <Box sx={weatherForecastBoxContainerStyles}>
-          <WeatherForecast />
-        </Box>
+        <WeatherForecast />
       </Grid>
       <Grid sx={secondaryGridStyles}>
-        <Stack direction="row" justifyContent="space-between" paddingRight={4}>
-          <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab value={Forecast.Hourly} label={Forecast.Hourly} />
-            <Tab value={Forecast.Daily} label={Forecast.Daily} />
-          </Tabs>
-          <ToggleButtonGroup
-            orientation="horizontal"
-            value={toggleButtonValue}
-            exclusive
-            onChange={handleToggleChange}
-          >
-            <ToggleButton
-              value={ForecastView.Card}
-              aria-label={ForecastView.Card}
-            >
-              <ViewModule />
-            </ToggleButton>
-            <ToggleButton
-              value={ForecastView.Chart}
-              aria-label={ForecastView.Chart}
-            >
-              <ShowChart />
-            </ToggleButton>
-          </ToggleButtonGroup>
-          <SignedIn>
-            <Stack direction="row" spacing={1}>
-              <Favorites />
-              <UserButton />
-            </Stack>
-          </SignedIn>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-        </Stack>
-        <Suspense fallback={<CircularProgress />}>
-          {tabValue === Forecast.Hourly ? (
-            <HourlyForecast toggleOption={toggleButtonValue} />
-          ) : (
-            <DailyForecast toggleOption={toggleButtonValue} />
-          )}
-        </Suspense>
+        <Toolbar
+          forecastTabValue={forecastTabValue}
+          toggleButtonValue={toggleButtonValue}
+          handleTabChange={handleTabChange}
+          handleToggleChange={handleToggleChange}
+        />
+        {forecastTabValue === Forecast.Hourly ? (
+          <HourlyForecast toggleOption={toggleButtonValue} />
+        ) : (
+          <DailyForecast toggleOption={toggleButtonValue} />
+        )}
         <HistoricalWeather />
       </Grid>
     </Stack>
