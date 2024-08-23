@@ -67,10 +67,35 @@ interface CityFindInterface {
   ];
 }
 
+interface WeatherAlertInterface {
+  alerts: [
+    {
+      regions: string[];
+      severity: string;
+      title: string;
+      uri: string;
+    }
+  ];
+}
+
+interface HistoricalWeatherInterface {
+  data: [
+    {
+      datetime: string;
+      max_temp: number;
+      min_temp: number;
+      wind_dir: number;
+      wind_spd: number;
+    }
+  ];
+}
+
 export type {
   CurrentWeatherInterface,
   UVIndexInterface,
   HourlyForecastInterface,
   DailyForecastInterface,
   CityFindInterface,
+  WeatherAlertInterface,
+  HistoricalWeatherInterface,
 };

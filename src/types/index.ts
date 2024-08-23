@@ -1,3 +1,6 @@
+import { Forecast, ForecastView, Historical } from "../enums";
+
+// Types
 export type WeatherForecast = {
   city: string;
   temperature: number;
@@ -39,4 +42,29 @@ export type CityFind = {
   country: string;
 };
 
-export type ForecastTabOptions = "hourly" | "daily";
+export type WeatherAlert = {
+  regions: string[];
+  severity: string;
+  title: string;
+  uri: string;
+};
+
+export type HistoricalWeather = {
+  date: string;
+  maxTemperature: number;
+  minTemperature: number;
+  windSpeed: number;
+  windDirection: number;
+};
+
+// * Options
+export type ForecastOption = `${Forecast}`;
+export type ForecastViewOption = `${ForecastView}`;
+export type HistoricalViewOption = `${Historical}`;
+
+// Interfaces
+export interface InitialFetchState<T> {
+  data: T | null;
+  loading: boolean;
+  error: string;
+}

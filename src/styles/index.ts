@@ -2,7 +2,7 @@ import { SxProps } from "@mui/material";
 import { theme } from "../theme";
 
 export const periodicForecastCardStyles: SxProps = {
-  width: 120,
+  minWidth: "180px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -12,6 +12,13 @@ export const periodicForecastCardStyles: SxProps = {
   borderRadius: 2,
   backgroundColor: theme.palette.primary.main,
   ":last-child": {
-    marginRight: "64px",
+    marginRight: 4,
   },
+};
+
+export const periodicForecastCardStylesSmall: SxProps = {
+  marginInline: "16px",
+  padding: "8px",
+  borderRadius: 2,
+  backgroundColor: theme.palette.primary.main,
 };

@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
   palette: {
+    mode: "dark",
     primary: {
       main: "#0B121E",
     },
@@ -11,6 +12,9 @@ export const theme = createTheme({
     text: {
       primary: "#DDE0E4",
       secondary: "#8C929C",
+    },
+    info: {
+      main: "#82B1FF",
     },
   },
   components: {
@@ -52,6 +56,16 @@ export const theme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: "#313C4A",
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          color: "#B0BEC5",
+          "&.Mui-selected": {
+            color: "#82B1FF",
+          },
         },
       },
     },

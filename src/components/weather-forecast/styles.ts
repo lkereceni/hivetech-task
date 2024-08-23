@@ -1,14 +1,6 @@
 import { SxProps } from "@mui/material";
 import { theme } from "../../theme";
 
-export const weatherForecastBoxContainerStyles: SxProps = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "column",
-  gap: 3,
-};
-
 export const weatherForecastCityStyles: SxProps = {
   fontSize: 48,
 };
