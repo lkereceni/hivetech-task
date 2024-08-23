@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  useMediaQuery,
 } from "@mui/material";
 import { auth } from "../../firebase";
 import { theme } from "../../theme";
@@ -17,6 +18,8 @@ export const SignIn: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
+
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSignin = async (event: FormEvent) => {
     event.preventDefault();
@@ -39,7 +42,11 @@ export const SignIn: FC = () => {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color={!sm ? "primary" : "secondary"}
+        onClick={handleOpen}
+      >
         Sign In
       </Button>
 
@@ -51,6 +58,7 @@ export const SignIn: FC = () => {
           <form onSubmit={handleSignin}>
             <TextField
               variant="outlined"
+              color="secondary"
               margin="normal"
               required
               fullWidth
@@ -63,6 +71,7 @@ export const SignIn: FC = () => {
             />
             <TextField
               variant="outlined"
+              color="secondary"
               margin="normal"
               required
               fullWidth

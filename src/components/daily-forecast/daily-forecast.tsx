@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, useMediaQuery } from "@mui/material";
 import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
 import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
 import { PeriodicForecastLoading } from "..";
@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ForecastView } from "../../enums";
 import { LineChart } from "@mui/x-charts";
 import { getShortDayName } from "../../utils";
+import { theme } from "../../theme";
 
 type DailyForecastProps = {
   toggleOption?: `${ForecastView}`;
@@ -16,6 +17,9 @@ type DailyForecastProps = {
 export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector((state) => state.search.selectedCity);
+
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { data, loading, error } = useAppSelector(
     (state) => state.dailyForecast
   );
@@ -47,8 +51,9 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
     <>
       {toggleOption === "card" ? (
         <Grid
-          display="grid"
-          gridTemplateColumns={`repeat(${data?.length}, 1fr)`}
+          display={{ xs: "flex", sm: "flex", md: "grid", lg: "grid" }}
+          direction={!sm ? "row" : "column"}
+          gridTemplateColumns={!sm ? `repeat(${data?.length}, 1fr)` : undefined}
           gap={2}
           sx={hourlyForecastGridStyles}
         >
@@ -106,6 +111,7 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
           }}
           grid={{ horizontal: true }}
           height={300}
+          sx={{ marginLeft: 4 }}
         />
       )}
     </>

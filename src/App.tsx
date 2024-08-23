@@ -1,5 +1,5 @@
 import { DailyForecast, SearchForm, WeatherForecast } from "./components";
-import { Grid, Stack } from "@mui/material";
+import { Grid, Stack, useMediaQuery } from "@mui/material";
 import { primaryGridStyles, secondaryGridStyles } from "./styles";
 import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
 import { SyntheticEvent, useState } from "react";
@@ -7,8 +7,11 @@ import { ForecastOption, ForecastViewOption } from "./types";
 import { Forecast } from "./enums";
 import { HistoricalWeather } from "./components/historical-weather/historical-weather";
 import { Toolbar } from "./components/toolbar/toolbar";
+import { theme } from "./theme";
 
 function App() {
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [forecastTabValue, setForecastTabValue] =
     useState<ForecastOption>("hourly");
   const [toggleButtonValue, setToggleButtonValue] =
@@ -42,6 +45,8 @@ function App() {
       </Grid>
       <Grid
         width={{ xs: "100vw", sm: "100vw", lg: "60vw" }}
+        paddingTop={{ xs: "32px", sm: "32px", md: "64px", lg: "64px" }}
+        paddingBottom="32px"
         sx={secondaryGridStyles}
       >
         <Toolbar
@@ -55,7 +60,7 @@ function App() {
         ) : (
           <DailyForecast toggleOption={toggleButtonValue} />
         )}
-        <HistoricalWeather />
+        {!sm ? <HistoricalWeather /> : null}
       </Grid>
     </Stack>
   );

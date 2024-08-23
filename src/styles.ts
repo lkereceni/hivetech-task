@@ -14,6 +14,5 @@ export const primaryGridStyles: SxProps = {
 export const secondaryGridStyles: SxProps = {
   flexDirection: "column",
   backgroundColor: theme.palette.secondary.main,
-  paddingLeft: "64px",
   paddingTop: "24px",
 };

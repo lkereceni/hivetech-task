@@ -45,7 +45,8 @@ export const HistoricalWeather = () => {
         justifyContent="space-between"
         alignItems="center"
         marginTop={12}
-        marginRight={2}
+        marginRight={4}
+        marginLeft={4}
       >
         <Stack direction="column" alignItems="start" justifyContent="center">
           <Typography variant="h3">Historical Weather</Typography>
@@ -144,6 +145,8 @@ export const HistoricalWeather = () => {
             grid={{ horizontal: true }}
             sx={{
               minHeight: 400,
+              marginLeft: 4,
+              marginRight: 4,
             }}
           />
         )}

@@ -9,6 +9,7 @@ import {
   DialogTitle,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { theme } from "../../theme";
 
@@ -17,6 +18,8 @@ export const SignUp: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
+
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSignup = async (event: FormEvent) => {
     event.preventDefault();
@@ -39,7 +42,11 @@ export const SignUp: FC = () => {
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button
+        variant="text"
+        color={!sm ? "primary" : "secondary"}
+        onClick={handleOpen}
+      >
         Sign Up
       </Button>
 
@@ -51,6 +58,7 @@ export const SignUp: FC = () => {
           <form onSubmit={handleSignup}>
             <TextField
               variant="outlined"
+              color="secondary"
               margin="normal"
               required
               fullWidth
@@ -63,6 +71,7 @@ export const SignUp: FC = () => {
             />
             <TextField
               variant="outlined"
+              color="secondary"
               margin="normal"
               required
               fullWidth

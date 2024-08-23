@@ -4,4 +4,5 @@ export const hourlyForecastGridStyles: SxProps = {
   overflowX: "auto",
   scrollbarWidth: "none",
   marginTop: 4,
+  marginLeft: 4,
 };

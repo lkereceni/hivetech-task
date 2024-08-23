@@ -126,7 +126,6 @@ export const WeatherForecast = () => {
             {weatherForecast.description}
           </Typography>
         </Stack>
-        {/* CHECK SIGN IN */}
         {user ? (
           <IconButton onClick={handleOnClickFavorite}>
             {!favoriteIconState ? (
@@ -150,7 +149,7 @@ export const WeatherForecast = () => {
         justifyContent="center"
         alignItems="center"
         flexWrap="wrap"
-        gap={4}
+        gap={3}
       >
         {weatherInfo.map((info, index) => (
           <WeatherInfoCard key={index} label={info.label} value={info.value} />
