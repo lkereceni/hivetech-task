@@ -16,12 +16,14 @@ import { WeatherAlert } from "../weather-alert/weather-alert";
 import { fetchWeatherAlertData } from "../../redux/weather-alert-slice";
 import { fetchCurrentForecastData } from "../../redux/current-forecast-slice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
 
 export const WeatherForecast = () => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector((state) => state.search.selectedCity);
 
-  const user = useAppSelector((state) => state.auth.currentUser);
+  const [user] = useAuthState(auth);
 
   const {
     data: weatherForecast,

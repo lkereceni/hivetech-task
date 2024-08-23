@@ -12,10 +12,10 @@ import { Favorites } from "../favorites/favorites";
 import { ForecastOption, ForecastViewOption } from "../../types";
 import { FC, SyntheticEvent } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth } from "../../firebase";
 import { SignIn } from "../auth/sign-in";
 import { SignUp } from "../auth/sign-up";
-import { useAppSelector } from "../../hooks";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 type ToolbarProps = {
   forecastTabValue: ForecastOption;
@@ -33,7 +33,7 @@ export const Toolbar: FC<ToolbarProps> = ({
   handleTabChange,
   handleToggleChange,
 }) => {
-  const user = useAppSelector((state) => state.auth.currentUser);
+  const [user] = useAuthState(auth);
 
   const handleSignOut = () => {
     signOut(auth);

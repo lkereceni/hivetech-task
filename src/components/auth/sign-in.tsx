@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth } from "../../firebase";
 import { theme } from "../../theme";
 
 export const SignIn: FC = () => {
