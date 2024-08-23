@@ -35,7 +35,7 @@ export const HourlyForecast: FC<HourlyForecastProps> = ({ toggleOption }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: 4,
+          padding: 6,
         }}
       >
         {error}

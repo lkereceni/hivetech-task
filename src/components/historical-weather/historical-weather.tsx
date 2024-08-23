@@ -14,7 +14,7 @@ import { chartContainerStyles } from "./styles";
 import { HistoricalViewOption } from "../../types";
 import { Air, Thermostat } from "@mui/icons-material";
 import { Historical } from "../../enums";
-import { getKph } from "../../utils";
+import { getKph, getShortMonthDateFormat } from "../../utils";
 
 export const HistoricalWeather = () => {
   const dispatch = useAppDispatch();
@@ -79,6 +79,9 @@ export const HistoricalWeather = () => {
               {
                 data: data ? data.map((entry) => entry.date) : undefined,
                 scaleType: "band",
+                valueFormatter: (value) => {
+                  return getShortMonthDateFormat(value);
+                },
               },
             ]}
             yAxis={[

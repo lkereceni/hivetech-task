@@ -30,16 +30,20 @@ function App() {
   return (
     <Stack
       component="main"
-      sx={{
-        flexDirection: "row",
-        height: "100vh",
-      }}
+      direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+      height={{ lg: "100vh" }}
     >
-      <Grid item sx={primaryGridStyles}>
+      <Grid
+        width={{ xs: "100vw", sm: "100vw", lg: "40vw" }}
+        sx={primaryGridStyles}
+      >
         <SearchForm />
         <WeatherForecast />
       </Grid>
-      <Grid sx={secondaryGridStyles}>
+      <Grid
+        width={{ xs: "100vw", sm: "100vw", lg: "60vw" }}
+        sx={secondaryGridStyles}
+      >
         <Toolbar
           forecastTabValue={forecastTabValue}
           toggleButtonValue={toggleButtonValue}

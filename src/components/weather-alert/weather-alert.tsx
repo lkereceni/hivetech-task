@@ -23,7 +23,14 @@ export const WeatherAlert: FC<WeatherAlertProps> = ({
       rel="noopener"
       style={{ textDecoration: "none", color: "inherit" }}
     >
-      <Alert variant="filled" severity={getSeverity(severity)}>
+      <Alert
+        variant="filled"
+        severity={getSeverity(severity)}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <Stack direction="row" spacing={2} alignItems="center">
           <Stack direction="column" justifyContent="center" alignItems="start">
             <Typography>{text}</Typography>

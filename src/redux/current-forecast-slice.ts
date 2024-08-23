@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CityFind, InitialFetchState, WeatherForecast } from "../types";
 import { fetchCurrentForecast, fetchUVIndex } from "../api";
 import { getErrorMessage, getKph } from "../utils";
+import { AxiosError } from "axios";
 
 const initialState: InitialFetchState<WeatherForecast> = {
   data: null,
@@ -11,23 +12,30 @@ const initialState: InitialFetchState<WeatherForecast> = {
 
 export const fetchCurrentForecastData = createAsyncThunk(
   "forecast/fetchCurrentForecastData",
-  async (city: CityFind) => {
-    const response = await fetchCurrentForecast(city.name);
-    const uvResponse = await fetchUVIndex(city.coord);
+  async (city: CityFind, { rejectWithValue }) => {
+    try {
+      const response = await fetchCurrentForecast(city.name);
+      const uvResponse = await fetchUVIndex(city.coord);
 
-    const currentForecastData: WeatherForecast = {
-      city: response.name,
-      temperature: Math.round(response.main.temp),
-      description: response.weather[0].description,
-      uvIndex: Math.round(uvResponse.value),
-      visibility: response.visibility,
-      humidity: response.main.humidity,
-      windSpeed: getKph(response.wind.speed),
-      feelsLikeTemperature: Math.round(response.main.feels_like),
-      pressure: response.main.pressure,
-    };
+      const currentForecastData: WeatherForecast = {
+        city: response.name,
+        temperature: Math.round(response.main.temp),
+        description: response.weather[0].description,
+        uvIndex: Math.round(uvResponse.value),
+        visibility: response.visibility,
+        humidity: response.main.humidity,
+        windSpeed: getKph(response.wind.speed),
+        feelsLikeTemperature: Math.round(response.main.feels_like),
+        pressure: response.main.pressure,
+      };
 
-    return currentForecastData;
+      return currentForecastData;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue(error);
+    }
   }
 );
 
@@ -46,7 +54,7 @@ const currentForecastSlice = createSlice({
       })
       .addCase(fetchCurrentForecastData.rejected, (state, action) => {
         state.loading = false;
-        state.error = getErrorMessage(action.error.message);
+        state.error = getErrorMessage(action.payload);
       });
   },
 });
