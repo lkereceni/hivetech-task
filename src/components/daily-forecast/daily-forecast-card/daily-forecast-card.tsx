@@ -15,8 +15,8 @@ export const DailyForecastCard: FC<DailyForecastCardProps> = ({ data }) => {
     <Card sx={periodicForecastCardStyles}>
       <Typography variant="body1">{getShortDayName(data.day)}</Typography>
       <img
-        width={42}
-        height={42}
+        width={60}
+        height={60}
         src={`https://www.weatherbit.io/static/img/icons/${data.icon}.png`}
       />
       <Box sx={dailyForecastTemperatureBoxStyles}>

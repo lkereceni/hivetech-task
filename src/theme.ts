@@ -13,6 +13,9 @@ export const theme = createTheme({
       primary: "#DDE0E4",
       secondary: "#8C929C",
     },
+    info: {
+      main: "#82B1FF",
+    },
   },
   components: {
     MuiButton: {

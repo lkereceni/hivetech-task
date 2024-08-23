@@ -44,7 +44,7 @@ export const HistoricalWeather = () => {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        marginTop={6}
+        marginTop={12}
         marginRight={2}
       >
         <Stack direction="column" alignItems="start" justifyContent="center">

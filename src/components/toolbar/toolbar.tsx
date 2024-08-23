@@ -1,10 +1,4 @@
-import {
-  SignedIn,
-  UserButton,
-  SignedOut,
-  SignInButton,
-} from "@clerk/clerk-react";
-import { ViewModule, ShowChart } from "@mui/icons-material";
+import { ViewModule, ShowChart, Settings } from "@mui/icons-material";
 import {
   Stack,
   Tabs,
@@ -17,6 +11,11 @@ import { Forecast, ForecastView } from "../../enums";
 import { Favorites } from "../favorites/favorites";
 import { ForecastOption, ForecastViewOption } from "../../types";
 import { FC, SyntheticEvent } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
+import { SignIn } from "../auth/sign-in";
+import { SignUp } from "../auth/sign-up";
+import { useAppSelector } from "../../hooks";
 
 type ToolbarProps = {
   forecastTabValue: ForecastOption;
@@ -34,8 +33,19 @@ export const Toolbar: FC<ToolbarProps> = ({
   handleTabChange,
   handleToggleChange,
 }) => {
+  const user = useAppSelector((state) => state.auth.currentUser);
+
+  const handleSignOut = () => {
+    signOut(auth);
+  };
+
   return (
-    <Stack direction="row" justifyContent="space-between" paddingRight={4}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      paddingRight={4}
+    >
       <Tabs value={forecastTabValue} onChange={handleTabChange}>
         <Tab value={Forecast.Hourly} label={Forecast.Hourly} />
         <Tab value={Forecast.Daily} label={Forecast.Daily} />
@@ -56,19 +66,22 @@ export const Toolbar: FC<ToolbarProps> = ({
           <ShowChart />
         </ToggleButton>
       </ToggleButtonGroup>
-      <SignedIn>
-        <Stack direction="row" spacing={1}>
-          <Favorites />
-          <UserButton />
-        </Stack>
-      </SignedIn>
-      <SignedOut>
-        <SignInButton mode="modal">
-          <Button variant="contained" color="primary" disableElevation>
-            Sign In
-          </Button>
-        </SignInButton>
-      </SignedOut>
+      <Stack direction="row" alignItems="center" spacing={2}>
+        {user ? (
+          <>
+            <Favorites />
+            <Settings />
+            <Button variant="contained" color="primary" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          </>
+        ) : (
+          <>
+            <SignUp />
+            <SignIn />
+          </>
+        )}
+      </Stack>
     </Stack>
   );
 };

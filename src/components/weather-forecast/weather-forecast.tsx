@@ -16,11 +16,12 @@ import { WeatherAlert } from "../weather-alert/weather-alert";
 import { fetchWeatherAlertData } from "../../redux/weather-alert-slice";
 import { fetchCurrentForecastData } from "../../redux/current-forecast-slice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { SignedIn } from "@clerk/clerk-react";
 
 export const WeatherForecast = () => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector((state) => state.search.selectedCity);
+
+  const user = useAppSelector((state) => state.auth.currentUser);
 
   const {
     data: weatherForecast,
@@ -123,7 +124,8 @@ export const WeatherForecast = () => {
             {weatherForecast.description}
           </Typography>
         </Stack>
-        <SignedIn>
+        {/* CHECK SIGN IN */}
+        {user ? (
           <IconButton onClick={handleOnClickFavorite}>
             {!favoriteIconState ? (
               <FavoriteBorder sx={favoriteIconStyles} />
@@ -131,7 +133,7 @@ export const WeatherForecast = () => {
               <Favorite sx={favoriteIconStyles} />
             )}
           </IconButton>
-        </SignedIn>
+        ) : null}
       </Stack>
       <Stack direction="column" spacing={1} alignItems="center">
         <Typography variant="body1" sx={weatherForecastTemperatureStyles}>

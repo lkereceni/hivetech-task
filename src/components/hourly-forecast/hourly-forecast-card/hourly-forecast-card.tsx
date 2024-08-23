@@ -12,8 +12,8 @@ export const HourlyForecastCard: FC<HourlyForecastCardProps> = ({ data }) => {
     <Card sx={periodicForecastCardStyles}>
       <Typography variant="body1">{data.time}</Typography>
       <img
-        width={42}
-        height={42}
+        width={60}
+        height={60}
         src={`https://www.weatherbit.io/static/img/icons/${data.icon}.png`}
       />
       <Typography variant="body1">{data.temperature}°C</Typography>
