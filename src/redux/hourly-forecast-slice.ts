@@ -1,8 +1,9 @@
 import { fetchHourlyForecast } from "../api";
 import { CityCoord, HourlyForecast, InitialFetchState } from "../types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getErrorMessage, getHours } from "../utils";
-import { AxiosError } from "axios";
+import { getHours } from "../utils";
+import { AxiosResponse } from "axios";
+import { HourlyForecastInterface } from "../types/api";
 
 const initialState: InitialFetchState<HourlyForecast[]> = {
   data: null,
@@ -14,8 +15,9 @@ export const fetchHourlyForecastData = createAsyncThunk(
   "forecast/fetchHourlyForecastData",
   async (coord: CityCoord, { rejectWithValue }) => {
     try {
-      const response = await fetchHourlyForecast(coord);
-      const hourlyForecastData: HourlyForecast[] = response.data.map(
+      const response: AxiosResponse<HourlyForecastInterface> =
+        await fetchHourlyForecast(coord);
+      const hourlyForecastData: HourlyForecast[] = response.data.data.map(
         (entry): HourlyForecast => ({
           temperature: Math.round(entry.app_temp),
           icon: entry.weather.icon,
@@ -25,10 +27,9 @@ export const fetchHourlyForecastData = createAsyncThunk(
 
       return hourlyForecastData;
     } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(
+        error instanceof Error ? error.message : String(error)
+      );
     }
   }
 );
@@ -48,7 +49,7 @@ const hourlyForecastSlice = createSlice({
       })
       .addCase(fetchHourlyForecastData.rejected, (state, action) => {
         state.loading = false;
-        state.error = getErrorMessage(action.payload);
+        state.error = String(action.payload);
       });
   },
 });

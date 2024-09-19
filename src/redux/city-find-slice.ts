@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchCityFind } from "../api";
 import { CityFind, InitialFetchState } from "../types";
 import { getErrorMessage } from "../utils";
+import { AxiosResponse } from "axios";
+import { CityFindInterface } from "../types/api";
 
 const initialState: InitialFetchState<CityFind[]> = {
   data: [],
@@ -12,8 +14,10 @@ const initialState: InitialFetchState<CityFind[]> = {
 export const fetchCityFindData = createAsyncThunk(
   "search/fetchFindCityData",
   async (city: string) => {
-    const response = await fetchCityFind(city);
-    const cityFindData: CityFind[] = response.list.map(
+    const response: AxiosResponse<CityFindInterface> = await fetchCityFind(
+      city
+    );
+    const cityFindData: CityFind[] = response.data.list.map(
       (entry): CityFind => ({
         id: entry.id,
         name: entry.name,

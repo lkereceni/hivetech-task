@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CityCoord, DailyForecast, InitialFetchState } from "../types";
 import { fetchDailyForecast } from "../api";
-import { getErrorMessage } from "../utils";
-import { AxiosError } from "axios";
+import { AxiosResponse } from "axios";
+import { DailyForecastInterface } from "../types/api";
 
 const initialState: InitialFetchState<DailyForecast[]> = {
   data: null,
@@ -14,8 +14,9 @@ export const fetchDailyForecastData = createAsyncThunk(
   "forecast/fetchDailyForecastData",
   async (coord: CityCoord, { rejectWithValue }) => {
     try {
-      const response = await fetchDailyForecast(coord);
-      const dailyForecastData: DailyForecast[] = response.data.map(
+      const response: AxiosResponse<DailyForecastInterface> =
+        await fetchDailyForecast(coord);
+      const dailyForecastData: DailyForecast[] = response.data.data.map(
         (entry): DailyForecast => ({
           maxTemperature: Math.round(entry.app_max_temp),
           minTemperature: Math.round(entry.app_min_temp),
@@ -26,10 +27,9 @@ export const fetchDailyForecastData = createAsyncThunk(
 
       return dailyForecastData;
     } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(
+        error instanceof Error ? error.message : String(error)
+      );
     }
   }
 );
@@ -49,7 +49,7 @@ const dailyForecastSlice = createSlice({
       })
       .addCase(fetchDailyForecastData.rejected, (state, action) => {
         state.loading = false;
-        state.error = getErrorMessage(action.payload);
+        state.error = String(action.payload);
       });
   },
 });

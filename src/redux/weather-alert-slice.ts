@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CityCoord, InitialFetchState, WeatherAlert } from "../types";
 import { fetchWeatherAlert } from "../api";
 import { getErrorMessage } from "../utils";
+import { AxiosResponse } from "axios";
+import { WeatherAlertInterface } from "../types/api";
 
 const initialState: InitialFetchState<WeatherAlert> = {
   data: null,
@@ -12,8 +14,9 @@ const initialState: InitialFetchState<WeatherAlert> = {
 export const fetchWeatherAlertData = createAsyncThunk(
   "weather/fetchWeatherAlertData",
   async (coord: CityCoord) => {
-    const response = await fetchWeatherAlert(coord);
-    const weatherAlertData: WeatherAlert = response.alerts[0];
+    const response: AxiosResponse<WeatherAlertInterface> =
+      await fetchWeatherAlert(coord);
+    const weatherAlertData: WeatherAlert = response.data.alerts[0];
 
     return weatherAlertData;
   }
