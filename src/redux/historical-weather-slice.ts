@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CityCoord, HistoricalWeather, InitialFetchState } from "../types";
 import { fetchHistoricalWeather } from "../api";
-import { getErrorMessage } from "../utils";
-import { AxiosError } from "axios";
+import { AxiosResponse } from "axios";
+import { HistoricalWeatherInterface } from "../types/api";
 
 const initialState: InitialFetchState<HistoricalWeather[]> = {
   data: null,
@@ -14,8 +14,9 @@ export const fetchHistoricalWeatherData = createAsyncThunk(
   "forecast/fetchHistoricalWeatherData",
   async (coord: CityCoord, { rejectWithValue }) => {
     try {
-      const response = await fetchHistoricalWeather(coord);
-      const historicalWeatherData: HistoricalWeather[] = response.data.map(
+      const response: AxiosResponse<HistoricalWeatherInterface> =
+        await fetchHistoricalWeather(coord);
+      const historicalWeatherData: HistoricalWeather[] = response.data.data.map(
         (entry): HistoricalWeather => ({
           date: entry.datetime,
           maxTemperature: entry.max_temp,
@@ -27,10 +28,9 @@ export const fetchHistoricalWeatherData = createAsyncThunk(
 
       return historicalWeatherData;
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(
+        error instanceof Error ? error.message : String(error)
+      );
     }
   }
 );
@@ -50,7 +50,7 @@ const historicalWeatherSlice = createSlice({
       })
       .addCase(fetchHistoricalWeatherData.rejected, (state, action) => {
         state.loading = false;
-        state.error = getErrorMessage(action.payload);
+        state.error = String(action.payload);
       });
   },
 });

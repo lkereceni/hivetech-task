@@ -8,6 +8,7 @@ const openWeatherMapInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 5000,
 });
 
 const weatherbitInstance = axios.create({
@@ -17,22 +18,54 @@ const weatherbitInstance = axios.create({
   },
 });
 
-openWeatherMapInstance.interceptors.request.use(async (config) => {
-  const token = await user?.getIdToken(true);
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+openWeatherMapInstance.interceptors.request.use(
+  async (config) => {
+    const token = await user?.getIdToken(true);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+openWeatherMapInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      return Promise.reject(
+        new Error(error.response.data.message || error.message)
+      );
+    }
+
+    return Promise.reject(new Error("Network error, please try again later."));
   }
+);
 
-  return config;
-});
+weatherbitInstance.interceptors.request.use(
+  async (config) => {
+    const token = await user?.getIdToken(true);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-weatherbitInstance.interceptors.request.use(async (config) => {
-  const token = await user?.getIdToken(true);
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+weatherbitInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      return Promise.reject(
+        new Error(error.response.data.message || error.message)
+      );
+    }
+
+    return Promise.reject(new Error("Network error, please try again later."));
   }
-
-  return config;
-});
+);
 
 export { openWeatherMapInstance, weatherbitInstance };
