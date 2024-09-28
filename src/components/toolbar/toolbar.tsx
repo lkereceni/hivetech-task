@@ -10,13 +10,13 @@ import {
   Container,
 } from "@mui/material";
 import { Forecast, ForecastView } from "../../enums";
-import { Favorites } from "../favorites/favorites";
+import { Favorites } from "../Favorites/Favorites";
 import { ForecastOption, ForecastViewOption } from "../../types";
 import { FC, SyntheticEvent } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { SignIn } from "../auth/sign-in";
-import { SignUp } from "../auth/sign-up";
+import { SignIn } from "../Auth/SignIn";
+import { SignUp } from "../Auth/SignUp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { theme } from "../../theme";
 

@@ -6,15 +6,15 @@ import {
   weatherForecastTemperatureStyles,
 } from "./styles";
 import { theme } from "../../theme";
-import { WeatherInfoCard } from "../weather-info-card/weather-info-card";
+import { WeatherInfoCard } from "../WeatherInfoCard/WeatherInfoCard";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { CityFind } from "../../types";
 import { LocalStorage } from "../../enums";
-import { WeatherAlert } from "../weather-alert/weather-alert";
-import { fetchWeatherAlertData } from "../../redux/weather-alert-slice";
-import { fetchCurrentForecastData } from "../../redux/current-forecast-slice";
+import { WeatherAlert } from "../WeatherAlert/WeatherAlert";
+import { fetchWeatherAlertData } from "../../redux/weatherAlertSlice";
+import { fetchCurrentForecastData } from "../../redux/currentForecastSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { fetchHistoricalWeatherData } from "../../redux/historical-weather-slice";
+import { fetchHistoricalWeatherData } from "../../redux/historicalWeatherSlice";
 import { LineChart } from "@mui/x-charts";
 import { chartContainerStyles } from "./styles";
 import { HistoricalViewOption } from "../../types";

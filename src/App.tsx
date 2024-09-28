@@ -1,12 +1,12 @@
 import { DailyForecast, SearchForm, WeatherForecast } from "./components";
 import { Grid, Stack, useMediaQuery } from "@mui/material";
 import { primaryGridStyles, secondaryGridStyles } from "./styles";
-import { HourlyForecast } from "./components/hourly-forecast/hourly-forecast";
+import { HourlyForecast } from "./components/HourlyForecast/HourlyForecast";
 import { SyntheticEvent, useState } from "react";
 import { ForecastOption, ForecastViewOption } from "./types";
 import { Forecast } from "./enums";
-import { HistoricalWeather } from "./components/historical-weather/historical-weather";
-import { Toolbar } from "./components/toolbar/toolbar";
+import { HistoricalWeather } from "./components/HistoricalWeather/HistoricalWeather";
+import { Toolbar } from "./components/Toolbar/Toolbar";
 import { theme } from "./theme";
 
 function App() {
