@@ -1,11 +1,11 @@
-import { SearchForm } from "./search-form/search-form";
-import { WeatherForecast } from "./weather-forecast/weather-forecast";
-import { DailyForecast } from "./daily-forecast/daily-forecast";
-import { HourlyForecast } from "./hourly-forecast/hourly-forecast";
-import { Favorites } from "./favorites/favorites";
-import { PeriodicForecastLoading } from "./loading/periodic-forecast-loading/periodic-forecast-loading";
-import { WeatherInfoCard } from "./weather-info-card/weather-info-card";
-import { WeatherAlert } from "./weather-alert/weather-alert";
+import { SearchForm } from "./SearchForm/SearchForm";
+import { WeatherForecast } from "./WeatherForecast/WeatherForecast";
+import { DailyForecast } from "./DailyForecast/DailyForecast";
+import { HourlyForecast } from "./HourlyForecast/HourlyForecast";
+import { PeriodicForecastLoading } from "./Loading/PeriodicForecastLoading/PeriodicForecastLoading";
+import { WeatherInfoCard } from "./WeatherInfoCard/WeatherInfoCard";
+import { WeatherAlert } from "./WeatherAlert/WeatherAlert";
+import { Favorites } from "./Favorites/Favorites";
 
 export {
   SearchForm,

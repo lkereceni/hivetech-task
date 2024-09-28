@@ -1,31 +1,30 @@
 import { Container, Grid, useMediaQuery } from "@mui/material";
-import { hourlyForecastGridStyles } from "../hourly-forecast/styles";
-import { DailyForecastCard } from "./daily-forecast-card/daily-forecast-card";
+import { hourlyForecastGridStyles } from "./styles";
+import { HourlyForecastCard } from "./HourlyForecastCard/HourlyForecastCard";
 import { PeriodicForecastLoading } from "..";
 import { FC, useEffect } from "react";
-import { fetchDailyForecastData } from "../../redux/daily-forecast-slice";
+import { fetchHourlyForecastData } from "../../redux/hourlyForecastSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ForecastView } from "../../enums";
 import { LineChart } from "@mui/x-charts";
-import { getShortDayName } from "../../utils";
 import { theme } from "../../theme";
 
-type DailyForecastProps = {
+type HourlyForecastProps = {
   toggleOption?: `${ForecastView}`;
 };
 
-export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
+export const HourlyForecast: FC<HourlyForecastProps> = ({ toggleOption }) => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector((state) => state.search.selectedCity);
 
   const sm = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { data, loading, error } = useAppSelector(
-    (state) => state.dailyForecast
+    (state) => state.hourlyForecast
   );
 
   useEffect(() => {
-    dispatch(fetchDailyForecastData(selectedCity.coord));
+    dispatch(fetchHourlyForecastData(selectedCity.coord));
   }, [dispatch, selectedCity.coord]);
 
   if (loading) {
@@ -39,7 +38,7 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: 4,
+          padding: 6,
         }}
       >
         {error}
@@ -58,18 +57,15 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
           sx={hourlyForecastGridStyles}
         >
           {data?.map((entry, index) => (
-            <DailyForecastCard key={index} data={entry} />
+            <HourlyForecastCard key={index} data={entry} />
           ))}
         </Grid>
       ) : (
         <LineChart
           xAxis={[
             {
-              data: data ? data.map((entry) => entry.day) : undefined,
-              scaleType: "band",
-              valueFormatter: (value) => {
-                return getShortDayName(value);
-              },
+              data: data ? data.map((entry) => entry.time) : undefined,
+              scaleType: "point",
             },
           ]}
           yAxis={[
@@ -79,20 +75,8 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
           ]}
           series={[
             {
-              label: "Max temperature",
-              data: data
-                ? data.map((entry) => entry.maxTemperature)
-                : undefined,
-              color: "#FF8A65",
-              valueFormatter: (value) => {
-                return `${value}°C`;
-              },
-            },
-            {
-              label: "Min temperature",
-              data: data
-                ? data.map((entry) => entry.minTemperature)
-                : undefined,
+              label: "Temperature",
+              data: data ? data.map((entry) => entry.temperature) : undefined,
               color: "#82B1FF",
               valueFormatter: (value) => {
                 return `${value}°C`;
@@ -109,7 +93,9 @@ export const DailyForecast: FC<DailyForecastProps> = ({ toggleOption }) => {
               padding: 2,
             },
           }}
-          grid={{ horizontal: true }}
+          grid={{
+            horizontal: true,
+          }}
           height={300}
           sx={{ marginLeft: 4 }}
         />

@@ -6,7 +6,7 @@ import {
   useReducer,
   useRef,
 } from "react";
-import { setSearch, setSelectedCity } from "../../redux/city-search-slice";
+import { setSearch, setSelectedCity } from "../../redux/citySearchSlice";
 import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { Form, searchTextFieldStyles } from "./styles";
 import { Search } from "@mui/icons-material";
@@ -14,9 +14,9 @@ import { theme } from "../../theme";
 import { CityFind } from "../../types";
 import { z } from "zod";
 import { cityValidationSchema } from "../../zod/schema";
-import { fetchCityFindData } from "../../redux/city-find-slice";
+import { fetchCityFindData } from "../../redux/cityFindSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { initialState, searchFormReducer } from "./search-form-reducer";
+import { initialState, searchFormReducer } from "./searchFormReducer";
 
 export const SearchForm = () => {
   const dispatch = useAppDispatch();

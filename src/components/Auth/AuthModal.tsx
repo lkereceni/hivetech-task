@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { FC } from "react";
-import { SignUp } from "./sign-up";
-import { SignIn } from "./sign-in";
+import { SignUp } from "./SignUp";
+import { SignIn } from "./SignIn";
 
 type AuthModalProps = {
   open: boolean;

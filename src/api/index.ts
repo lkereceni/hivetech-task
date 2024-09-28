@@ -1,6 +1,6 @@
 import { CityCoord } from "../types";
 import { getISODateFormat, getPastDays } from "../utils";
-import { openWeatherMapInstance, weatherbitInstance } from "./axios-instances";
+import { openWeatherMapInstance, weatherbitInstance } from "./axiosInstances";
 
 const OPENWEATHERMAP_API_KEY = import.meta.env.VITE_API_KEY;
 const WEATHERBIT_API_KEY = import.meta.env.VITE_WEATHERBIT_API_KEY;

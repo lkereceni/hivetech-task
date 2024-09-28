@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import searchReducer from "./city-search-slice";
-import cityFindReducer from "./city-find-slice";
-import weatherAlertReducer from "./weather-alert-slice";
-import hourlyForecastReducer from "./hourly-forecast-slice";
-import dailyForecastReducer from "./daily-forecast-slice";
-import currentForecastReducer from "./current-forecast-slice";
-import historicalWeatherReducer from "./historical-weather-slice";
-import authReducer from "./auth-slice";
+import searchReducer from "./citySearchSlice";
+import cityFindReducer from "./cityFindSlice";
+import weatherAlertReducer from "./weatherAlertSlice";
+import hourlyForecastReducer from "./hourlyForecastSlice";
+import dailyForecastReducer from "./dailyForecastSlice";
+import currentForecastReducer from "./currentForecastSlice";
+import historicalWeatherReducer from "./historicalWeatherSlice";
+import authReducer from "./authSlice";
 
 export const store = configureStore({
   reducer: {

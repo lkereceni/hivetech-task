@@ -1,7 +1,7 @@
 import { Favorite } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { MouseEvent, useState } from "react";
-import { setSelectedCity } from "../../redux/city-search-slice";
+import { setSelectedCity } from "../../redux/citySearchSlice";
 import { CityFind } from "../../types";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { LocalStorage } from "../../enums";
